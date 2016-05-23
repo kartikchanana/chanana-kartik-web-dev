@@ -2,17 +2,23 @@ input.form-control {
     margin-bottom: 5px;
 }
 
-body {
+body.push-down {
     padding-top: 60px;
 
 }
-
+body.push-down.bottom-padded {
+    padding-top: 60px;
+    padding-bottom: 70px;
+}
 p.navbar-text.pull-right {
     margin-right: 15px;
 }
 
 p.navbar-text.pull-left {
     margin-left: 15px;
+}
+a:hover{
+    text-decoration: none;
 }
 div.widget-choice{
     margin-bottom: 19px;
