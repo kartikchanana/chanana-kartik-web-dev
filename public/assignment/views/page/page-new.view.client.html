@@ -11,7 +11,8 @@
                 New Page
             </a>
             <p class="navbar-text pull-right">
-                <a href="/assignment/Page/page-list.html" class="navbar-link">
+                <a ng-click="model.createPage(model.websiteId,name,title)"
+                   href="#/user/{{model.userId}}/website" class="navbar-link">
                   <span class="glyphicon glyphicon-ok">
                   </span>
                 </a>
@@ -25,15 +26,17 @@
     <form>
         <div class="form-group">
             <label for="Page-name">Name</label>
-            <input type="text"
+            <input ng-model="name"
+                   type="text"
                    class="form-control"
                    id="Page-name"
                    placeholder="Page Name">
         </div>
         <div class="form-group">
-            <label for="Page-description">Title</label>
-                <textarea rows="4"
-                          id="Page-description"
+            <label for="Page-title">Title</label>
+                <textarea ng-model="title"
+                          rows="4"
+                          id="Page-title"
                           class="form-control"
                           placeholder="Page Title"></textarea>
         </div>

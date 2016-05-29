@@ -15,11 +15,20 @@
     function WebsiteService() {
         var api = {
             createWebsite: createWebsite,
-            findWebsitesForUserId: findWebsitesForUserId,
-            deleteWebsite: deleteWebsite
+            findWebsitesByUser: findWebsitesByUser,
+            deleteWebsite: deleteWebsite,
+            findWebsiteById: findWebsiteById
         };
         return api;
 
+        function findWebsiteById(websiteId){
+            for (var i in websites){
+                if(websites[i]._id === websiteId){
+                    return websites[i];
+                }
+            }return null;
+        }
+        
         function deleteWebsite(websiteId) {
             for(var i in websites) {
                 if(websites[i]._id === websiteId) {
@@ -41,7 +50,7 @@
             return newWebsite;
         }
 
-        function findWebsitesForUserId(userId) {
+        function findWebsitesByUser(userId) {
             var resultSet = [];
             for(var i in websites) {
                 if(websites[i].developerId === userId) {

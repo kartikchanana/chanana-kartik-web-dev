@@ -9,6 +9,10 @@
         vm.websiteId = $routeParams.websiteId;
         vm.deleteWebsite = deleteWebsite;
 
+        function init(){
+            vm.website = WebsiteService.findWebsiteById(vm.websiteId);
+        }
+        init();
         function deleteWebsite(websiteId) {
             var result = WebsiteService.deleteWebsite(websiteId);
             if(result) {
