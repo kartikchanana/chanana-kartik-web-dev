@@ -17,10 +17,20 @@
             createWebsite: createWebsite,
             findWebsitesByUser: findWebsitesByUser,
             deleteWebsite: deleteWebsite,
-            findWebsiteById: findWebsiteById
+            findWebsiteById: findWebsiteById,
+            updateWebsite: updateWebsite
         };
         return api;
 
+        function updateWebsite(websiteId, newWebsite) {
+            for (var i in websites) {
+                if (websites[i]._id === websiteId) {
+                    websites[i].name = newWebsite.name;
+                    websites[i].description = newWebsite.description;
+                    return true;
+                }
+            }
+        }
         function findWebsiteById(websiteId){
             for (var i in websites){
                 if(websites[i]._id === websiteId){

@@ -14,9 +14,9 @@
         var api = {
             createPage: createPage,
             findPageByWebsiteId: findPageByWebsiteId,
-            findPageById: findPageById
+            findPageById: findPageById,
             // updatePage: updatePage,
-            // deletePage: deletePage
+            deletePage: deletePage
         };
         return api;
 
@@ -28,6 +28,16 @@
             };
             pages.push(newPage);
             return newPage;
+        }
+
+        function deletePage(pageId) {
+            for(var i in pages) {
+                if(pages[i]._id === pageId) {
+                    pages.splice(i, 1);
+                    return true;
+                }
+            }
+            return false;
         }
         
         function findPageByWebsiteId(websiteId){

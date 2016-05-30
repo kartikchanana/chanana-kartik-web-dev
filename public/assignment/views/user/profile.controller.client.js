@@ -7,7 +7,7 @@
         var vm = this;
         vm.updateUser = updateUser;
         vm.flag = 0;
-        var id = $routeParams.id;
+        var id = $routeParams.userId;
 
         function init() {
             vm.user = UserService.findUserById(id);
