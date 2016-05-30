@@ -14,12 +14,22 @@
         var api = {
             createPage: createPage,
             findPageByWebsiteId: findPageByWebsiteId,
-            findPageById: findPageById,
+            findPageById: findPageById
             // updatePage: updatePage,
             // deletePage: deletePage
         };
         return api;
 
+        function createPage(websiteId, name, title) {
+            var newPage = {
+                _id: (new Date()).getTime()+"",
+                name: name,
+                websiteId: websiteId
+            };
+            pages.push(newPage);
+            return newPage;
+        }
+        
         function findPageByWebsiteId(websiteId){
             var resultSet = [];
             for (var i in pages){
@@ -31,42 +41,14 @@
         }
 
         function findPageById(pageId){
-            var resultSet = [];
             for (var i in pages){
                 if(pages[i]._id === pageId){
                     return(pages[i]);
                 }
             }
+            return null;
         }
-        // function deletePage(pageId) {
-        //     for(var i in websites) {
-        //         if(websites[i]._id === websiteId) {
-        //             websites.splice(i, 1);
-        //             return true;
-        //         }
-        //     }
-        //     return false;
-        // }
-        //
-        function createPage(websiteId, name, title) {
-            var newPage = {
-                _id: (new Date()).getTime()+"",
-                name: name,
-                title: title,
-                websiteId: websiteId
-            };
-            pages.push(newPage);
-            return newPage;
-        }
-        //
-        // function findWebsitesForUserId(userId) {
-        //     var resultSet = [];
-        //     for(var i in websites) {
-        //         if(websites[i].developerId === userId) {
-        //             resultSet.push(websites[i]);
-        //         }
-        //     }
-        //     return resultSet;
-        // }
+        
+        
     }
 })();

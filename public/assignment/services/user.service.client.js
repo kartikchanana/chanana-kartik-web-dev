@@ -32,10 +32,9 @@
                     };
                     users.push(userNew);
                     console.log(users);
-                    return true;
+                    return userNew;
                 }
             }
-            return false;
         }
         
         function deleteUser(userId) {

@@ -19,14 +19,14 @@
         </div>
     </div>
 </nav>
-
+{{model.pages}}
 <div class="container">
     <ul class="list-group">
         <li ng-repeat="page in model.pages" class="list-group-item">
-            <a href="/assignment/widget/widget-list.html">
+            <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{page._id}}/widget">
                 {{page.name}}
             </a>
-            <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}" class="pull-right">
+            <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{page._id}}" class="pull-right">
                 <span class="glyphicon glyphicon-cog"></span>
             </a>
         </li>

@@ -53,7 +53,7 @@
                 controller: "PageEditController",
                 controllerAs: "model"
             })
-            .when("/user/:uid/website/:wid/page/:pid/widget", {
+            .when("/user/:uid/website/:websiteId/page/:pageId/widget", {
                 templateUrl: "views/widget/widget-list.view.client.html",
                 controller: "WidgetListController",
                 controllerAs: "model"
