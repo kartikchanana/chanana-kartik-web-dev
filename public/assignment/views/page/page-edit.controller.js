@@ -9,7 +9,15 @@
         vm.websiteId = $routeParams.websiteId;
         vm.pageId = $routeParams.pageId;
         vm.deletePage = deletePage;
+        vm.updatePage = updatePage;
 
+        function updatePage(newPage){
+            var newPage = PageService.updatePage(vm.pageId,newPage);
+            if(newPage)
+            {
+                $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page");
+            }
+        }
         function init(){
             vm.page = PageService.findPageById(vm.pageId);
         }

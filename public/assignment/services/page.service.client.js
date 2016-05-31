@@ -15,10 +15,20 @@
             createPage: createPage,
             findPageByWebsiteId: findPageByWebsiteId,
             findPageById: findPageById,
-            // updatePage: updatePage,
+            updatePage: updatePage,
             deletePage: deletePage
         };
         return api;
+
+        function updatePage(pageId, newPage) {
+            for (var i in pages) {
+                if (pages[i]._id === pageId) {
+                    pages[i].name = newPage.name;
+                    pages[i].title = newPage.title;
+                    return true;
+                }
+            }
+        }
 
         function createPage(websiteId, name, title) {
             var newPage = {
@@ -29,6 +39,7 @@
             pages.push(newPage);
             return newPage;
         }
+
 
         function deletePage(pageId) {
             for(var i in pages) {

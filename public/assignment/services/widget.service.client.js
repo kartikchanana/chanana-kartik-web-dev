@@ -17,12 +17,97 @@
 
     function WidgetService() {
         var api = {
-            findWidgetsForPageId: findWidgetsForPageId
+            findWidgetsForPageId:findWidgetsForPageId,
+            createWidget:createWidget,
+            findWidgetById:findWidgetById,
+            updateWidget: updateWidget,
+            deleteWidget: deleteWidget
         };
         return api;
-        
-        function findWidgetsForPageId(pageId) {
+
+        function deleteWidget(widgetId) {
+            for(var i in widgets)
+            {
+                if(widgetId===widgets[i]._id) {
+                    widgets.splice(i, 1);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function updateWidget(widget,id) {
+            for (var i in widgets) {
+                console.log(id);
+                console.log(widgets[i]._id);
+                if (widgets[i]._id === id ) {
+                    console.log(widgets[i].widgetType);
+                    switch (widgets[i].widgetType) {
+                        case "HEADER":
+                            widgets[i].size = widget.size;
+                            widgets[i].text = widget.text;
+                            return true
+                            break;
+
+                        case "IMAGE":
+                            widgets[i].width = widget.width;
+                            widgets[i].url = widget.url;
+                            return true;
+                            break;
+                        case "YOUTUBE":
+                            widgets[i].width = widget.width;
+                            widgets[i].url = widget.url;
+                            return true;
+                            break;
+                    }
+                }
+            }
+        }
+
+        function findWidgetById(id)
+        {
+            for(var i in widgets)
+            {
+                if(widgets[i]._id===id)
+                {
+                    return widgets[i];
+                }
+            }
+            return null;
+        }
+
+
+            function findWidgetsForPageId(pageId) {
             return widgets;
+        }
+        function createWidget(pageId, arg){
+            if(arg == "heading") {
+                var newWidget={
+                    _id: (new Date()).getTime()+"",
+                    widgetType: "HEADER",
+                    pageId: pageId
+                };
+                widgets.push(newWidget);
+                return newWidget;
+            }
+            if(arg == "image") {
+                var newWidget={
+                    _id: (new Date()).getTime()+"",
+                    widgetType: "IMAGE",
+                    pageId: pageId
+            };
+                widgets.push(newWidget);
+                return newWidget;
+            }
+            if(arg == "youtube") {
+                var newWidget={
+                    _id: (new Date()).getTime()+"",
+                    widgetType: "YOUTUBE",
+                    pageId:  pageId
+            };
+                widgets.push(newWidget);
+                return newWidget;
+            }
         }
     }
 })();

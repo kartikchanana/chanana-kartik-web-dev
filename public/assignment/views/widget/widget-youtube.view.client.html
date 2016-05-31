@@ -1,0 +1,77 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <p class="navbar-text pull-left">
+                <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget" class="navbar-link">
+                  <span class="glyphicon glyphicon-chevron-left">
+                  </span>
+                </a>
+            </p>
+            <a class="navbar-brand" href="#">
+                Widget Edit
+            </a>
+            <p class="navbar-text pull-right">
+                <a  ng-click="model.updateWidget(model.widget)" class="navbar-link">
+                  <span class="glyphicon glyphicon-ok">
+                  </span>
+                </a>
+            </p>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div ng-show="model.error" class="alert alert-danger">
+        {{model.error}}
+    </div>
+    <form>
+        <div class="form-group">
+            <label for="Youtube name">Name</label>
+            <input ng-model="model.widget.name"
+                   type="text"
+                   class="form-control"
+                   id="Youtube name"
+                   placeholder="Youtube video">
+        </div>
+        <div class="form-group">
+            <label for="Youtube text">Text</label>
+            <input ng-model="model.widget.text"
+                   type="text"
+                   class="form-control"
+                   id="Youtube text"
+                   placeholder="Youtube text">
+        </div>
+        <div class="form-group">
+            <label for="Youtube url">URL</label>
+            <input ng-model="model.widget.url"
+                   type="url"
+                   class="form-control"
+                   id="Youtube url"
+                   placeholder="Youtube url"
+            >
+        </div>
+        <div class="form-group">
+            <label for="Youtube width">Width</label>
+            <input ng-model="model.widget.width"
+                   type="text"
+                   class="form-control"
+                   id="Youtube width"
+                   placeholder="Youtube width">
+        </div>
+        <a class="btn btn-danger btn-block"
+           ng-click="model.deleteWidget(model.widgetId)">Delete</a>
+
+    </form>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container">
+        <div class="row navbar-text pull-right">
+            <div class="col-xs-3 text-center">
+                <a href="#/profile/{{model.userId}}">
+                    <span class="glyphicon glyphicon-user"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>

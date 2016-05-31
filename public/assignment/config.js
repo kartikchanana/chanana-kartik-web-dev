@@ -53,9 +53,19 @@
                 controller: "PageEditController",
                 controllerAs: "model"
             })
-            .when("/user/:uid/website/:websiteId/page/:pageId/widget", {
+            .when("/user/:userId/website/:websiteId/page/:pageId/widget", {
                 templateUrl: "views/widget/widget-list.view.client.html",
                 controller: "WidgetListController",
+                controllerAs: "model"
+            })
+            .when("/user/:userId/website/:websiteId/page/:pageId/widget/new", {
+                templateUrl: "views/widget/widget-chooser.view.client.html",
+                controller: "WidgetChooserController",
+                controllerAs: "model"
+            })
+            .when("/user/:userId/website/:websiteId/page/:pageId/widget/:widgetId", {
+                templateUrl: "views/widget/widget-edit.view.client.html",
+                controller: "WidgetEditController",
                 controllerAs: "model"
             })
             .otherwise({

@@ -23,7 +23,10 @@
             }
         }
         function updateWebsite(newWebsite) {
-            WebsiteService.updateWebsite(vm.websiteId,newWebsite);
+            var newWebsite = WebsiteService.updateWebsite(vm.websiteId,newWebsite);
+            if(newWebsite){
+                $location.url("/user/"+vm.userId+"/website")
+            }
         }
     }
 })();

@@ -66,15 +66,6 @@
             return null;
         }
 
-        function findUserByUsername(username) {
-            for(var i in users) {
-                if(users[i].username === username) {
-                    return users[i];
-                }
-            }
-            return null;
-        }
-
         function findUserByCredentials(username, password) {
             for(var i in users) {
                 if(users[i].username === username && users[i].password === password) {
