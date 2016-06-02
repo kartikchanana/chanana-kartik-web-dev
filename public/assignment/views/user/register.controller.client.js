@@ -8,12 +8,14 @@
         vm.createUser = createUser;
 
         function createUser(username, password, verifyPassword) {
-            var newUser = UserService.createUser(username, password, verifyPassword);
-            if(newUser){
-                $location.url("/profile/"+newUser._id);
-            } else {
-                vm.error = "Unable to create user";
-            }
+            UserService
+                .createUser(username, password, verifyPassword)
+                .then(function (response){
+                    var user = response.data;
+                    if(user){
+                        $location.url("/profile/"+user._id);
+                    }
+                });
         }
     }
 })();

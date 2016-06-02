@@ -10,12 +10,20 @@
         var id = $routeParams.userId;
 
         function init() {
-            vm.user = UserService.findUserById(id);
+            UserService
+                .findUserById(id)
+                .then(function(response){
+                    vm.user = response.data;
+                });
         }
         init();
 
         function updateUser(newUser) {
-            UserService.updateUser(id, newUser);
+            UserService
+                .updateUser(id, newUser)
+                .then(function(response){
+                    
+                })
             vm.flag = 1;
         }
     }
