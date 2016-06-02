@@ -7,12 +7,18 @@
         var vm = this;
 
         vm.login = function(username, password) {
-            var user = UserService.findUserByCredentials(username, password);
-            if(user) {
-                $location.url("/profile/" + user._id);
-            } else {
-                vm.error = "User not found";
-            }
+            UserService
+                .findUserByCredentials(username, password)
+                .then(function(response){
+                var user = response.data;
+                console.log(response);
+                if(user) {
+                    $location.url("/profile/" + user._id);
+                } else {
+                    vm.error = "User not found";
+                }
+            });
+
         }
     }
 })();

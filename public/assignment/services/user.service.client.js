@@ -4,10 +4,11 @@
         .factory("UserService", UserService);
     
 
-    function UserService() {
+    function UserService($http) {
         var api = {
             createUser: createUser,
             findUserByCredentials: findUserByCredentials,
+            findUserByUsername: findUserByUsername,
             findUserById: findUserById,
             updateUser: updateUser,
             deleteUser: deleteUser
@@ -60,13 +61,12 @@
             return null;
         }
 
+        function findUserByUsername() {
+
+        }
         function findUserByCredentials(username, password) {
-            for(var i in users) {
-                if(users[i].username === username && users[i].password === password) {
-                    return users[i];
-                }
-            }
-            return null;
+            var url = "/api/user?username="+username+"&password="+password;
+            return $http.get(url);
         }
     }
 })();
