@@ -21,9 +21,13 @@
         function updateUser(newUser) {
             UserService
                 .updateUser(id, newUser)
-                .then(function(response){
-                    
-                })
+                .then(
+                    function(response){
+                        vm.success = "Profile saved successfully";
+                    },
+                    function(error){
+                        vm.error = "Profile save failed";
+                    });
             vm.flag = 1;
         }
     }

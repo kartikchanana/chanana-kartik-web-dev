@@ -15,7 +15,7 @@
         };
         return api;
 
-        function createUser(username, password, verifyPassword) {
+        function createUser(username, password) {
             var userNew = {
                     _id: (new Date()).getTime()+"",
                     username: username,
@@ -34,14 +34,9 @@
         }
         
         function updateUser(id, newUser) {
-            for(var i in users) {
-                if(users[i]._id === id) {
-                    users[i].firstName = newUser.firstName;
-                    users[i].lastName = newUser.lastName;
-                    return true;
-                }
-            }
-            return false;
+            console.log("id from user client" +id);
+            var url= "/api/user/" + id;
+            return $http.put(url, newUser);
         }
 
         function findUserById(id) {
