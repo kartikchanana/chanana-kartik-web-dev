@@ -12,7 +12,7 @@
                 .then(function(response){
                 var user = response.data;
                 console.log(response);
-                if(user) {
+                if(user._id) {
                     $location.url("/profile/" + user._id);
                 } else {
                     vm.error = "User not found";
