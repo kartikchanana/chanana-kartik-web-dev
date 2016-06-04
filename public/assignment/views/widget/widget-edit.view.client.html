@@ -1,4 +1,13 @@
 <div ng-switch="model.widget.widgetType">
+    URL
+    <input ng-model="model.widget.url" class="form-control"/>
+
+    <form action="/api/uploads"  method="post" enctype="multipart/form-data">
+        <input  name="myFile"   type="file" class="form-control"/>
+        <input  name="width"    value="{{model.widget.width}}" style="display: none"/>
+        <input  name="widgetId" value="{{model.widget._id}}"   style="display: none"/>
+        <button type="submit"   class="btn btn-block btn-primary">Upload Image</button>
+    </form>
     <div ng-switch-when="HEADER">
         <ng-include src="'views/widget/widget-heading.view.client.html'"/>
     </div>
