@@ -37,15 +37,12 @@
         }
         function updateWidget(widget)
         {
-            var result = WidgetService.updateWidget(widget,vm.widgetId);
-
-            if(result)
-            {
-                $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget");
-            }
-            else
-                vm.error="unable to update";
-
+            WidgetService
+                .updateWidget(widget,vm.widgetId)
+                .then(function (response) {
+                    vm.success = "Updated successfully";
+                    $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget");
+                });
         }
     }
 })();

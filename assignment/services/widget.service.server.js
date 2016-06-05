@@ -16,6 +16,40 @@ module.exports = function (app) {
 
     app.post ("/api/uploads", upload.single('myFile'), uploadImage);
     app.get("/api/widget/:widgetId", findWidgetById);
+    app.put("/api/widget/:widgetId", updateWidget);
+    app.get("/api/page/:pageId/widget", findAllWidgetsForPage);
+    
+    function updateWidget(req,res) {
+        var widgetId = req.params.widgetId;
+        var widget = req.body;
+        for (var i in widgets) {
+            if (widgets[i]._id === widgetId ) {
+                switch (widgets[i].widgetType) {
+                    case "HEADER":
+                        widgets[i].size = widget.size;
+                        widgets[i].text = widget.text;
+                    case "IMAGE":
+                        widgets[i].width = widget.width;
+                        widgets[i].url = widget.url;
+                    case "YOUTUBE":
+                        widgets[i].width = widget.width;
+                        widgets[i].url = widget.url;
+                }
+            }
+            res.send(400);
+        }
+    }
+    function findAllWidgetsForPage(req,res){
+        var pageId = req.params.pageId;
+        var resultSet = [];
+        for(var i in widgets){
+            if(widgets[i].pageId === pageId){
+                resultSet.push(widgets[i]);
+            }
+        }
+        res.json(resultSet);
+        return;
+    }
 
     function findWidgetById(req,res){
         var widgetId = req.params.widgetId;

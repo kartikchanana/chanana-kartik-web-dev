@@ -11,22 +11,30 @@
         vm.updateWebsite= updateWebsite;
 
         function init(){
-            vm.website = WebsiteService.findWebsiteById(vm.websiteId);
+            WebsiteService
+                .findWebsiteById(vm.websiteId)
+                .then(function (response) {
+                    vm.website = response.data;
+                });
         }
         init();
         function deleteWebsite(websiteId) {
-            var result = WebsiteService.deleteWebsite(vm.websiteId);
-            if(result) {
-                $location.url("/user/"+vm.userId+"/website");
-            } else {
-                vm.error = "Unable to delete website";
-            }
+            WebsiteService
+                .deleteWebsite(vm.websiteId)
+                .then(function (response) {
+                    $location.url("/user/"+vm.userId+"/website");
+                },function (error) {
+                    vm.error="Unable to delete website"
+                });
         }
         function updateWebsite(newWebsite) {
-            var newWebsite = WebsiteService.updateWebsite(vm.websiteId,newWebsite);
-            if(newWebsite){
-                $location.url("/user/"+vm.userId+"/website")
-            }
+            WebsiteService
+                .updateWebsite(vm.websiteId,newWebsite)
+                .then(function (response) {
+                    $location.url("/user/"+vm.userId+"/website")
+                },function (error) {
+                    vm.error = "Could not save profile"
+                });
         }
     }
 })();

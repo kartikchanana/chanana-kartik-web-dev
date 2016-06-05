@@ -12,23 +12,30 @@
         vm.updatePage = updatePage;
 
         function updatePage(newPage){
-            var newPage = PageService.updatePage(vm.pageId,newPage);
-            if(newPage)
-            {
-                $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page");
-            }
+            console.log("reached controller");
+            PageService
+                .updatePage(vm.pageId,newPage)
+                .then(function (response) {
+                    vm.success = "Updated successfully";
+                    $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page");
+                },function (error) {
+                    vm.error = "Cannot update page";
+                });
         }
         function init(){
-            vm.page = PageService.findPageById(vm.pageId);
+            PageService
+                .findPageById(vm.pageId)
+                .then(function (response) {
+                    vm.page = response.data;
+                });
         }
         init();
         function deletePage(pageId){
-            var result = PageService.deletePage(pageId);
-            if(result) {
-                $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page");
-            } else {
-                vm.error = "Unable to delete page";
-            }
+            PageService
+                .deletePage(pageId)
+                .then(function (response) {
+                    $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page");
+                });
         }
     }
 })();

@@ -8,16 +8,20 @@
         vm.pageId = $routeParams.pageId;
         vm.websiteId = $routeParams.websiteId;
         vm.userId = $routeParams.userId;
-        console.log(vm.pageId);
-        console.log(vm.websiteId);
-        console.log(vm.userId);
         vm.getSafeHtml = getSafeHtml;
         vm.getSafeUrl = getSafeUrl;
 
         function init() {
-            vm.widgets = WidgetService.findWidgetsForPageId(vm.pageId);
+            WidgetService
+                .findWidgetsForPageId(vm.pageId)
+                .then(function (response) {
+                    vm.widgets = response.data;
+                });
+            $(".container")
+                .sortable({axis : "y"});
         }
         init();
+
 
         function getSafeHtml(widget) {
             return $sce.trustAsHtml(widget.text);

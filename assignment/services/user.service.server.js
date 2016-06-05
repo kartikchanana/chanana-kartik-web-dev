@@ -62,8 +62,6 @@ module.exports = function (app) {
             findUserByCredentials(res, username, password);
         }else if(username){
             findUserByUsername(res, username);
-        }else{
-            res.send(users);
         }
     }
 

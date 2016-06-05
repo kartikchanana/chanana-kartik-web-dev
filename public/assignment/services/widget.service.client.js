@@ -37,31 +37,8 @@
         }
 
         function updateWidget(widget,id) {
-            for (var i in widgets) {
-                console.log(id);
-                console.log(widgets[i]._id);
-                if (widgets[i]._id === id ) {
-                    console.log(widgets[i].widgetType);
-                    switch (widgets[i].widgetType) {
-                        case "HEADER":
-                            widgets[i].size = widget.size;
-                            widgets[i].text = widget.text;
-                            return true
-                            break;
-
-                        case "IMAGE":
-                            widgets[i].width = widget.width;
-                            widgets[i].url = widget.url;
-                            return true;
-                            break;
-                        case "YOUTUBE":
-                            widgets[i].width = widget.width;
-                            widgets[i].url = widget.url;
-                            return true;
-                            break;
-                    }
-                }
-            }
+            var url = "/api/widget/" + id;
+            return $http.put(url, widget);
         }
 
         function findWidgetById(id) {
@@ -71,7 +48,8 @@
 
 
             function findWidgetsForPageId(pageId) {
-            return widgets;
+                var url = "/api/page/" + pageId + "/widget";
+                return $http.get(url);
         }
         function createWidget(pageId, arg){
             if(arg == "heading") {
