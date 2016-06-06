@@ -2,25 +2,19 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <p class="navbar-text pull-left">
-                <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget" class="navbar-link">
+                <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/{{model.widgetId}}" class="navbar-link">
                   <span class="glyphicon glyphicon-chevron-left">
                   </span>
                 </a>
             </p>
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand">
                 Search Flickr
             </a>
-            <p class="navbar-text pull-right">
-                <a  ng-click="model.updateWidget(model.widget)" class="navbar-link">
-                  <span class="glyphicon glyphicon-ok">
-                  </span>
-                </a>
-            </p>
         </div>
     </div>
 </nav>
 
-<div class="container">
+<div class="container-fluid">
     <div class="input-group">
         <input ng-model="searchText" type="text" class="form-control">
     <span class="input-group-btn">

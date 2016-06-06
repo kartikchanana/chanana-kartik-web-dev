@@ -26,14 +26,11 @@
 
         function deleteWidget(widgetId)
         {
-            var result = WidgetService.deleteWidget(vm.widgetId);
-            if(result)
-            {
-                $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget");
-            }
-            else
-                vm.error="unable to delete";
-
+            WidgetService
+                .deleteWidget(vm.widgetId)
+                .then(function (response) {
+                    $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget");
+                });
         }
         function updateWidget(widget)
         {

@@ -18,7 +18,9 @@
                     vm.widgets = response.data;
                 });
             $(".container")
-                .sortable({axis : "y"});
+                .sortable({
+                    axis:"y"
+                });
         }
         init();
 

@@ -26,14 +26,9 @@
         return api;
 
         function deleteWidget(widgetId) {
-            for(var i in widgets)
-            {
-                if(widgetId===widgets[i]._id) {
-                    widgets.splice(i, 1);
-                    return true;
-                }
-            }
-            return false;
+            console.log("reached client service");
+            var url = "/api/widget/" +widgetId;
+            return $http.delete(url);
         }
 
         function updateWidget(widget,id) {
@@ -58,8 +53,7 @@
                     widgetType: "HEADER",
                     pageId: pageId
                 };
-                widgets.push(newWidget);
-                return newWidget;
+                return $http.post("/api/page/" +pageId +"/widget", newWidget);
             }
             if(arg == "image") {
                 var newWidget={
@@ -67,8 +61,7 @@
                     widgetType: "IMAGE",
                     pageId: pageId
             };
-                widgets.push(newWidget);
-                return newWidget;
+                return $http.post("/api/page/" +pageId +"/widget", newWidget);
             }
             if(arg == "youtube") {
                 var newWidget={
@@ -76,8 +69,8 @@
                     widgetType: "YOUTUBE",
                     pageId:  pageId
             };
-                widgets.push(newWidget);
-                return newWidget;
+                console.log(newWidget);
+                return  $http.post("/api/page/" +pageId +"/widget", newWidget);
             }
         }
     }

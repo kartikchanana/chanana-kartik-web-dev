@@ -39,9 +39,11 @@
             return $http.get(url);
         }
 
-        function findUserByUsername() {
-
+        function findUserByUsername(username) {
+            var url = "/api/user/" +username;
+            return $http.get(url);
         }
+
         function findUserByCredentials(username, password) {
             var url = "/api/user?username="+username+"&password="+password;
             return $http.get(url);

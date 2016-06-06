@@ -17,7 +17,31 @@ module.exports = function (app) {
     app.post ("/api/uploads", upload.single('myFile'), uploadImage);
     app.get("/api/widget/:widgetId", findWidgetById);
     app.put("/api/widget/:widgetId", updateWidget);
+    app.delete("/api/widget/:widgetId", deleteWidget);
     app.get("/api/page/:pageId/widget", findAllWidgetsForPage);
+    app.post("/api/page/:pageId/widget", createWidget);
+
+    function deleteWidget(req,res) {
+        console.log("reached server service");
+        var widgetId = req.params.widgetId;
+        for(var i in widgets)
+        {
+            if(widgets[i]._id===widgetId) {
+                widgets.splice(i, 1);
+                res.send(200);
+                return;
+            }
+        }
+        res.send(400);
+    }
+
+    function createWidget(req, res){
+        var widget = req.body;
+        var pageId = req.params.widgetId;
+        widgets.push(widget);
+        res.send(widget);
+        return;
+    }
     
     function updateWidget(req,res) {
         var widgetId = req.params.widgetId;
@@ -28,15 +52,20 @@ module.exports = function (app) {
                     case "HEADER":
                         widgets[i].size = widget.size;
                         widgets[i].text = widget.text;
+                        res.send(200);
+                        break;
                     case "IMAGE":
                         widgets[i].width = widget.width;
                         widgets[i].url = widget.url;
+                        res.send(200);
+                        break;;
                     case "YOUTUBE":
                         widgets[i].width = widget.width;
                         widgets[i].url = widget.url;
+                        res.send(200);
+                        break;;
                 }
             }
-            res.send(400);
         }
     }
     function findAllWidgetsForPage(req,res){
@@ -62,23 +91,37 @@ module.exports = function (app) {
         return status(404).send("unable to find widget with id: " + widgetId);
     }
 
+
+
     function uploadImage(req, res) {
-        var widgetId = req.body.widgetId;
-        var width = req.body.width;
-        var myFile = req.file;
+        var widgetId      = req.body.widgetId;
+        var pageId      = req.body.pageId;
+        var userId      = req.body.userId;
+        var websiteId      = req.body.websiteId;
+        var width         = req.body.width;
+        var myFile        = req.file;
 
-        var originalname = myFile.originalname; // file name on user's computer
-        var filename = myFile.filename;     // new file name in upload folder
-        var path = myFile.path;         // full path of uploaded file
-        var destination = myFile.destination;  // folder where file is saved to
-        var size = myFile.size;
-        var mimetype = myFile.mimetype;
+        if(myFile == null)
+        {
+            res.redirect("/assignment/#/user/"+userId+"/website/"+websiteId+"/page/"+pageId+"/widget/"+widgetId);
+            return;
+        }
 
-        for(var i in widgets){
-            if(widgets[i]._id === widgetId){
-                widgets[i].url = "/uploads/" + filename;
+        var originalname  = myFile.originalname; // file name on user's computer
+        var filename      = myFile.filename;     // new file name in upload folder
+        var path          = myFile.path;         // full path of uploaded file
+        var destination   = myFile.destination;  // folder where file is saved to
+        var size          = myFile.size;
+        var mimetype      = myFile.mimetype;
+
+        for(var i in widgets)
+        {
+            if(widgets[i]._id===widgetId)
+            {
+                widgets[i].url="/uploads/"+filename;
             }
         }
-        res.redirect("/assignment/#/user/456/website/456/page/321/widget/" +widgetId);
+
+        res.redirect("/assignment/#/user/"+userId+"/website/"+websiteId+"/page/"+pageId+"/widget/"+widgetId);
     }
 };

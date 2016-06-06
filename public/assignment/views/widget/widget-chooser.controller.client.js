@@ -8,9 +8,6 @@
         vm.pageId = $routeParams.pageId;
         vm.websiteId = $routeParams.websiteId;
         vm.userId = $routeParams.userId;
-        console.log(vm.pageId);
-        console.log(vm.websiteId);
-        console.log(vm.userId);
         vm.createHeading = createHeading;
         vm.createImage = createImage;
         vm.createYoutube= createYoutube;
@@ -19,31 +16,25 @@
         var youtube = "youtube";
         
         function createHeading(){
-            var newWidget = WidgetService.createWidget(vm.pageId, header);
-            if(newWidget){
-                $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget");
-            }
-            else{
-                vm.error("Unable to create heading widget");
-            }
+            WidgetService
+                .createWidget(vm.pageId, header)
+                .then(function (response) {
+                    $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget");
+                });
         }
         function createImage(){
-            var newWidget = WidgetService.createWidget(vm.pageId, img);
-            if(newWidget){
-                $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget");
-            }
-            else{
-                vm.error("Unable to create image widget");
-            }
+            WidgetService
+                .createWidget(vm.pageId, img)
+                .then(function (response) {
+                    $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget");
+                });
         }
         function createYoutube(){
-            var newWidget = WidgetService.createWidget(vm.pageId, youtube);
-            if(newWidget){
-                $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget");
-            }
-            else{
-                vm.error("Unable to create youtube widget");
-            }
+            WidgetService
+                .createWidget(vm.pageId, youtube)
+                .then(function (response) {
+                    $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget");
+                });
         }
     }
 })();

@@ -9,7 +9,7 @@ module.exports = function (app) {
     app.get("/api/website/:websiteId/page", findAllPagesForWebsite);
     app.get("/api/page/:pageId", findPageById);
     app.put("/api/page/:pageId", updatePage);
-    app.delete("/api/page/:pageId", updatePage);
+    app.delete("/api/page/:pageId", deletePage);
 
     function deletePage(req,res) {
         var pageId = req.params.pageId;
