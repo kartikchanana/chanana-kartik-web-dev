@@ -14,6 +14,7 @@
                 .createPage(vm.websiteId, name, title)
                 .then(function (response) {
                     var page = response.data;
+                    console.log("page back at controller: " +page);
                     if(page){
                         $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page");
                     }

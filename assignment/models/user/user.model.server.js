@@ -1,5 +1,6 @@
-module.exports = function(mongoose) {
+module.exports = function() {
 
+    var mongoose = require("mongoose");
     var UserSchema = require("./user.schema.server")(mongoose);
     var User = mongoose.model("User", UserSchema);
 
@@ -36,8 +37,6 @@ module.exports = function(mongoose) {
     }
 
     function createUser(user) {
-        console.log("user.model.server.createUser()");
-        console.log(user);
         return User.create(user);
     }
     

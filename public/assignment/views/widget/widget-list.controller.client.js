@@ -10,8 +10,10 @@
         vm.userId = $routeParams.userId;
         vm.getSafeHtml = getSafeHtml;
         vm.getSafeUrl = getSafeUrl;
+        //vm.reorderWidgets = reorderWidgets;
 
         function init() {
+            console.log("reached init");
             WidgetService
                 .findWidgetsForPageId(vm.pageId)
                 .then(function (response) {
@@ -23,6 +25,7 @@
                 });
         }
         init();
+
 
 
         function getSafeHtml(widget) {

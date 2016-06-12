@@ -1,6 +1,8 @@
-module.exports = function (app) {
-    var multer = require('multer'); // npm install multer --save
+module.exports = function (app, models) {
+
+    var multer = require('multer');
     var upload = multer({ dest: __dirname+'/../../public/uploads' });
+    var widgetModel = models.widgetModel;
 
     var widgets = [
         { "_id": "123", "widgetType": "HEADER", "pageId": "321", "size": 2, "text": "GIZMODO"},
@@ -22,73 +24,57 @@ module.exports = function (app) {
     app.post("/api/page/:pageId/widget", createWidget);
 
     function deleteWidget(req,res) {
-        console.log("reached server service");
         var widgetId = req.params.widgetId;
-        for(var i in widgets)
-        {
-            if(widgets[i]._id===widgetId) {
-                widgets.splice(i, 1);
-                res.send(200);
-                return;
-            }
-        }
-        res.send(400);
+        widgetModel
+            .deleteWidget(widgetId)
+            .then(function (stats) {
+                    console.log(stats);
+                    res.send(200);
+                },
+                function(error) {
+                    res.statusCode(404).send(error);
+                });
     }
 
     function createWidget(req, res){
         var widget = req.body;
-        var pageId = req.params.widgetId;
-        widgets.push(widget);
-        res.send(widget);
-        return;
+        var pageId = req.params.pageId;
+        widgetModel
+            .createWidget(pageId, widget)
+            .then(function (widget) {
+                res.json(widget)
+            });
     }
     
     function updateWidget(req,res) {
         var widgetId = req.params.widgetId;
         var widget = req.body;
-        for (var i in widgets) {
-            if (widgets[i]._id === widgetId ) {
-                switch (widgets[i].widgetType) {
-                    case "HEADER":
-                        widgets[i].size = widget.size;
-                        widgets[i].text = widget.text;
-                        res.send(200);
-                        break;
-                    case "IMAGE":
-                        widgets[i].width = widget.width;
-                        widgets[i].url = widget.url;
-                        res.send(200);
-                        break;;
-                    case "YOUTUBE":
-                        widgets[i].width = widget.width;
-                        widgets[i].url = widget.url;
-                        res.send(200);
-                        break;;
-                }
+        widgetModel
+            .updateWidget(widgetId, widget)
+            .then(function (stats) {
+                    console.log(stats);
+                    res.send(200);
+                },
+                function(error) {
+                    res.statusCode(404).send(error);
+                });
             }
-        }
-    }
     function findAllWidgetsForPage(req,res){
         var pageId = req.params.pageId;
-        var resultSet = [];
-        for(var i in widgets){
-            if(widgets[i].pageId === pageId){
-                resultSet.push(widgets[i]);
-            }
-        }
-        res.json(resultSet);
-        return;
+        widgetModel
+            .findAllWidgetsForPage(pageId)
+            .then(function (pages) {
+                res.json(pages)
+            });
     }
 
     function findWidgetById(req,res){
         var widgetId = req.params.widgetId;
-        for(var i in widgets) {
-            if(widgets[i]._id===widgetId) {
-                res.json(widgets[i]);
-                return;
-            }
-        }
-        return status(404).send("unable to find widget with id: " + widgetId);
+        widgetModel
+            .findWidgetById(widgetId)
+            .then(function (widget) {
+                res.send(widget);
+            });
     }
 
 

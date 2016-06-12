@@ -9,7 +9,7 @@
             findWebsitesByUser: findWebsitesByUser,
             deleteWebsite: deleteWebsite,
             findWebsiteById: findWebsiteById,
-            updateWebsite: updateWebsite
+            updateWebsite: updateWebsite,
         };
         return api;
 
@@ -29,10 +29,8 @@
         
         function createWebsite(developerId, name, desc) {
             var newWebsite = {
-                _id: (new Date()).getTime()+"",
                 name: name,
-                description: desc,
-                developerId: developerId
+                description: desc
             };
             return $http.post("/api/user/" +developerId +"/website", newWebsite);
         }

@@ -1,11 +1,17 @@
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
+            <p class="navbar-text pull-left">
+                <a href="/assignment/page/page-list.html" class="navbar-link">
+                  <span class="glyphicon glyphicon-chevron-left">
+                  </span>
+                </a>
+            </p>
             <a class="navbar-brand" href="#">
-                Websites
+                HTML Widget
             </a>
             <p class="navbar-text pull-right">
-                <a href="#/user/{{model.userId}}/website/new" class="navbar-link">
+                <a href="/assignment/widget/widget-chooser.html" class="navbar-link">
                   <span class="glyphicon glyphicon-plus">
                   </span>
                 </a>
@@ -13,17 +19,20 @@
         </div>
     </div>
 </nav>
+
 <div class="container">
-    <ul class="list-group">
-        <li ng-repeat="website in model.websites" class="list-group-item">
-            <a href="#/user/{{website._user}}/website/{{website._id}}/page">
-                {{website.name}}
-            </a>
-            <a href="#/user/{{website._user}}/website/{{website._id}}" class="pull-right">
-                <span class="glyphicon glyphicon-cog"></span>
-            </a>
-        </li>
-    </ul>
+
+    <div ng-model="model.widget.html"
+         text-angular
+         ta-toolbar="[['h1','h2','h3'],['bold','italics','underline','strikeThrough'],
+        ['ul','ol'],['justifyLeft','justifyCenter','justifyRight','justifyFull'],
+        ['indent','outdent'],['html']]">
+    </div>
+
+    {{model.widget.html}}
+
+    <div ng-bind-html="model.widget.html"></div>
+
 </div>
 
 <nav class="navbar navbar-default navbar-fixed-bottom">

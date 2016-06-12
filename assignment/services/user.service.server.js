@@ -54,7 +54,6 @@ module.exports = function (app, models) {
             .createUser(user)
             .then(
                 function(user) {
-                    console.log(user);
                     res.json(user);
                 },
                 function(error) {

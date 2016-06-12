@@ -13,9 +13,8 @@
                 .createWebsite(vm.userId, name, description)
                 .then(function (response) {
                     var website = response.data;
-                    console.log(website.name);
                     if(website){
-                        $location.url("/user/"+website.developerId+"/website");
+                        $location.url("/user/"+website._user+"/website");
                     }
                 });
         }

@@ -49,29 +49,25 @@
         function createWidget(pageId, arg){
             if(arg == "heading") {
                 var newWidget={
-                    _id: (new Date()).getTime()+"",
-                    widgetType: "HEADER",
-                    pageId: pageId
+                    type: "HEADER"
                 };
                 return $http.post("/api/page/" +pageId +"/widget", newWidget);
             }
             if(arg == "image") {
                 var newWidget={
-                    _id: (new Date()).getTime()+"",
-                    widgetType: "IMAGE",
-                    pageId: pageId
+                    type: "IMAGE"
             };
                 return $http.post("/api/page/" +pageId +"/widget", newWidget);
             }
             if(arg == "youtube") {
                 var newWidget={
-                    _id: (new Date()).getTime()+"",
-                    widgetType: "YOUTUBE",
-                    pageId:  pageId
+                    type: "YOUTUBE"
             };
-                console.log(newWidget);
                 return  $http.post("/api/page/" +pageId +"/widget", newWidget);
+                console.log(newWidget);
+
             }
+
         }
     }
 })();
