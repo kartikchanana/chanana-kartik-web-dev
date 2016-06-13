@@ -22,18 +22,52 @@ module.exports = function (app, models) {
     app.delete("/api/widget/:widgetId", deleteWidget);
     app.get("/api/page/:pageId/widget", findAllWidgetsForPage);
     app.post("/api/page/:pageId/widget", createWidget);
+    app.put("/api/page/:pageId/widget",reorderWidgets);
 
-    function deleteWidget(req,res) {
-        var widgetId = req.params.widgetId;
-        widgetModel
-            .deleteWidget(widgetId)
-            .then(function (stats) {
-                    console.log(stats);
+    
+    function reorderWidgets(req,res)
+    {
+        var start = parseInt(req.query.start);
+        var stop = parseInt(req.query.end);
+        console.log("at server service " +start);
+        console.log("at server service " +stop);
+        var pageId = req.params.pageId;
+        console.log("at server service " +pageId);
+        widgetModel.reorderWidgets(start,stop,pageId)
+            .then(function(stats)
+                {
                     res.send(200);
                 },
-                function(error) {
-                    res.statusCode(404).send(error);
+                function(error)
+                {
+                    res.statusCode.send(404);
                 });
+
+    }
+
+    function deleteWidget(req,res)
+    {
+        var widgetId = req.params.widgetId;
+        var pageId=req.query.pageId;
+        var widgetNumber=req.query.widgetNumber;
+        widgetModel
+            .updateDeletedWidget(pageId,widgetNumber)
+            .then(function(widgets)
+            {
+
+                widgetModel
+                    .deleteWidget(widgetId)
+                    .then(function(stats)
+                        {
+                            res.send(200);
+                        },
+                        function(error) {
+                            res.statusCode.send(error);
+                        });
+            },function(error)
+            {
+                res.statusCode.send(error);
+            });
     }
 
     function createWidget(req, res){
@@ -100,13 +134,18 @@ module.exports = function (app, models) {
         var size          = myFile.size;
         var mimetype      = myFile.mimetype;
 
-        for(var i in widgets)
-        {
-            if(widgets[i]._id===widgetId)
-            {
-                widgets[i].url="/uploads/"+filename;
-            }
-        }
+        var widget = {
+            url: "/uploads/"+filename
+        };
+        widgetModel
+            .updateWidget(widgetId, widget)
+            .then(function (stats) {
+                    console.log(stats);
+                    res.send(200);
+                },
+                function(error) {
+                    res.statusCode(404).send(error);
+                });
 
         res.redirect("/assignment/#/user/"+userId+"/website/"+websiteId+"/page/"+pageId+"/widget/"+widgetId);
     }

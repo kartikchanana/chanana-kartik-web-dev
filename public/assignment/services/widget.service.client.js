@@ -21,17 +21,28 @@
             createWidget:createWidget,
             findWidgetById:findWidgetById,
             updateWidget: updateWidget,
-            deleteWidget: deleteWidget
+            deleteWidget: deleteWidget,
+            reorderWidgets: reorderWidgets
         };
         return api;
 
-        function deleteWidget(widgetId) {
-            console.log("reached client service");
-            var url = "/api/widget/" +widgetId;
+        function reorderWidgets(pageId,start,end)
+        {
+            console.log("at client service " +start);
+            console.log("at client service " +end);
+            console.log("at client service " +pageId);
+            var url = "/api/page/"+pageId+"/widget?start="+start+"&end="+end;
+            return $http.put(url);
+        }
+
+        function deleteWidget(widgetId,pageId,widgetNumber) {
+            var url= "/api/widget/"+widgetId+"?pageId="+pageId+"&widgetNumber="+widgetNumber;
             return $http.delete(url);
         }
 
-        function updateWidget(widget,id) {
+
+
+            function updateWidget(widget,id) {
             var url = "/api/widget/" + id;
             return $http.put(url, widget);
         }
@@ -46,28 +57,49 @@
                 var url = "/api/page/" + pageId + "/widget";
                 return $http.get(url);
         }
-        function createWidget(pageId, arg){
+        function createWidget(pageId, arg, length){
             if(arg == "heading") {
                 var newWidget={
-                    type: "HEADER"
+                    type: "HEADER",
+                    widgetNumber: length,
+                    _page: pageId
                 };
                 return $http.post("/api/page/" +pageId +"/widget", newWidget);
             }
             if(arg == "image") {
                 var newWidget={
-                    type: "IMAGE"
+                    type: "IMAGE",
+                    widgetNumber: length,
+                    _page: pageId
             };
                 return $http.post("/api/page/" +pageId +"/widget", newWidget);
             }
             if(arg == "youtube") {
+                var newWidget = {
+                    type: "YOUTUBE",
+                    widgetNumber: length,
+                    _page: pageId
+                };
+                return $http.post("/api/page/" +pageId +"/widget", newWidget);
+            }
+            if(arg == "html") {
+                var newWidget = {
+                    type: "HTML",
+                    widgetNumber: length,
+                    _page: pageId
+                };
+                return $http.post("/api/page/" +pageId +"/widget", newWidget);
+            }
+
+            if(arg == "text") {
                 var newWidget={
-                    type: "YOUTUBE"
+                    type: "TEXT",
+                    widgetNumber: length,
+                    _page: pageId
             };
                 return  $http.post("/api/page/" +pageId +"/widget", newWidget);
                 console.log(newWidget);
-
             }
-
         }
     }
 })();

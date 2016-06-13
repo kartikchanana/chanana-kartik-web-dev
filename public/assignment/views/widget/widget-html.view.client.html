@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <p class="navbar-text pull-left">
-                <a href="/assignment/page/page-list.html" class="navbar-link">
+                <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget" class="navbar-link">
                   <span class="glyphicon glyphicon-chevron-left">
                   </span>
                 </a>
@@ -11,8 +11,8 @@
                 HTML Widget
             </a>
             <p class="navbar-text pull-right">
-                <a href="/assignment/widget/widget-chooser.html" class="navbar-link">
-                  <span class="glyphicon glyphicon-plus">
+                <a ng-click="model.updateWidget(model.widget)" class="navbar-link">
+                  <span class="glyphicon glyphicon-ok">
                   </span>
                 </a>
             </p>
@@ -22,17 +22,12 @@
 
 <div class="container">
 
-    <div ng-model="model.widget.html"
+    <div ng-model="model.widget.text"
          text-angular
          ta-toolbar="[['h1','h2','h3'],['bold','italics','underline','strikeThrough'],
         ['ul','ol'],['justifyLeft','justifyCenter','justifyRight','justifyFull'],
         ['indent','outdent'],['html']]">
     </div>
-
-    {{model.widget.html}}
-
-    <div ng-bind-html="model.widget.html"></div>
-
 </div>
 
 <nav class="navbar navbar-default navbar-fixed-bottom">

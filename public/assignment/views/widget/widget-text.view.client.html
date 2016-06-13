@@ -1,0 +1,58 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <p class="navbar-text pull-left">
+                <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget" class="navbar-link ">
+                    <span class="glyphicon glyphicon-chevron-left "></span>
+                </a>
+            </p>
+            <a class="navbar-brand" >
+                    Text Edit
+            </a>
+            <p class="navbar-text pull-right">
+                <a ng-click="model.updateWidget(model.widget)" class="navbar-link ">
+                    <span class="glyphicon glyphicon-ok "></span>
+                </a>
+            </p>
+        </div>
+
+    </div>
+</nav>
+<div class="container">
+    <form>
+        <label>Text</label>
+        <input ng-model="model.widget.text" class="form-control"/>
+        <label> Rows</label>
+        <input ng-model="model.widget.rows" class="form-control" type="number"/>
+        <label> Placeholder</label>
+        <input ng-model="model.widget.placeholder" class="form-control"/>
+        <label> Formatted </label>
+        <div class="input-group">
+            <input type="text"
+                   readonly
+                   value="Formatted"
+                   class="form-control"/>
+            <span class="input-group-addon">
+                <input ng-model="model.widget.formatted"
+               type="checkbox"/>
+            </span>
+        </div>
+
+        <a class="btn btn-danger btn-block"
+               ng-click="model.deleteWidget(model.widgetId)">Delete</a>
+    </form>
+</div>
+
+
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container">
+        <div class="row navbar-text pull-right">
+            <div class="col-xs-3 text-center">
+                <a href="#/profile/{{model.userId}}">
+                    <span class="glyphicon glyphicon-user"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
