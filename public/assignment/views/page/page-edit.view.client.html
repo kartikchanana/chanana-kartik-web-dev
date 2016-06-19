@@ -21,23 +21,27 @@
 </nav>
 
     <div class="container">
-
-        <form>
+        <div ng-if="model.error" class="alert alert-danger">
+            {{model.error}}
+        </div>
+        <form name="pageEditForm">
             <div class="form-group">
                 <label for="page-name">Name</label>
                 <input type="text"
                        class="form-control"
                        id="page-name"
                        ng-model="model.page.name"
-                       placeholder="Blog Post">
+                       placeholder="Blog Post"
+                       required/>
             </div>
+            <span ng-if="model.error">{{model.error}}</span>
             <div class="form-group">
                 <label for="page-title">Page Title</label>
                 <input type="text"
                        id="page-title"
                        class="form-control"
                        ng-model="model.page.title"
-                       placeholder="Page Title">
+                       placeholder="Page Title"/>
             </div>
         </form>
 
@@ -49,7 +53,7 @@
     <div class="container">
         <div class="row navbar-text pull-right">
             <div class="col-xs-3 text-center">
-                <a href="#/user/{{model.userId}}">
+                <a href="#/profile">
                     <span class="glyphicon glyphicon-user"></span>
                 </a>
             </div>

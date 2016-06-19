@@ -5,6 +5,9 @@ body{
     padding-top: 60px;
     padding-bottom: 70px;
 }
+input.ng-invalid{
+    background-color: #fcefa1;
+}
 p.navbar-text.pull-right {
     margin-right: 15px;
 }

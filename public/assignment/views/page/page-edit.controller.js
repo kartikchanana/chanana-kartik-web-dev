@@ -12,15 +12,19 @@
         vm.updatePage = updatePage;
 
         function updatePage(newPage){
-            console.log("reached controller");
-            PageService
-                .updatePage(vm.pageId,newPage)
-                .then(function (response) {
-                    vm.success = "Updated successfully";
-                    $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page");
-                },function (error) {
-                    vm.error = "Cannot update page";
-                });
+            if(!newPage.name){
+                vm.error = "Page name required";
+            }
+            else {
+                PageService
+                    .updatePage(vm.pageId, newPage)
+                    .then(function (response) {
+                        vm.success = "Updated successfully";
+                        $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page");
+                    }, function (error) {
+                        vm.error = "Cannot update page";
+                    });
+            }
         }
         function init(){
             PageService

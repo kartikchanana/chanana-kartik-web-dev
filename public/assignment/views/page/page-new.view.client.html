@@ -22,16 +22,20 @@
 </nav>
 
 <div class="container">
-
-    <form>
+    <div ng-if="model.error" class="alert alert-danger">
+        {{model.error}}
+    </div>
+    <form name="model.newPageForm" novalidate>
         <div class="form-group">
-            <label for="Page-name">Name</label>
+            <label for="Pagename">Name</label>
             <input ng-model="name"
                    type="text"
                    class="form-control"
-                   id="Page-name"
-                   placeholder="Page Name">
+                   id="Pagename"
+                   placeholder="Page Name"
+                   required/>
         </div>
+        <span ng-if="model.error">{{model.error}}</span>
         <div class="form-group">
             <label for="Page-title">Title</label>
                 <textarea ng-model="title"
@@ -43,11 +47,13 @@
     </form>
 </div>
 
+
+
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="container">
         <div class="row navbar-text pull-right">
             <div class="col-xs-3 text-center">
-                <a href="#/profile/{{model.userId}}">
+                <a href="#/profile">
                     <span class="glyphicon glyphicon-user"></span>
                 </a>
             </div>

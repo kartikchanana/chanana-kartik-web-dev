@@ -34,12 +34,17 @@
         }
         function updateWidget(widget)
         {
-            WidgetService
-                .updateWidget(widget,vm.widgetId)
-                .then(function (response) {
-                    vm.success = "Updated successfully";
-                    $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget");
-                });
+            if(!widget.name){
+                vm.error = "Name required";
+            }else{
+                WidgetService
+                    .updateWidget(widget,vm.widgetId)
+                    .then(function (response) {
+                        vm.success = "Updated successfully";
+                        $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget");
+                    });
+            }
+            
         }
     }
 })();

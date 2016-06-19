@@ -1,0 +1,32 @@
+<div class="container">
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand">
+                    <img src="./images/2f3f929.png" class="logo">
+                </a>
+                <p class="navbar-text pull-right top-right-button">
+                    <a class="btn btn-info btn-block"
+                       href="#/login">SIGN IN/REGISTER</a>
+                </p>
+            </div>
+        </div>
+    </nav>
+</div>
+    <div class="top-header-div">
+        <div class="top-header-inner">
+            <h1 style="font-size: 60px">BE MUSIC</h1>
+            <hr>
+            <p class="p-main-page">Sheet music at your fingertips</p>
+            <span class="input-group search-bar">
+                <input ng-model="searchText",
+                       type="text"
+                       class="form-control"
+                       placeholder="Find sheet music...">
+                <span class="input-group-btn">
+                    <button ng-click="model.searchNotes(searchText)" class="btn btn-default search-btn">
+                        <i class="glyphicon glyphicon-search"></i></button>
+                </span>
+            </span>
+        </div>
+    </div>

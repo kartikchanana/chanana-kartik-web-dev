@@ -24,7 +24,7 @@
     <div ng-show="model.error" class="alert alert-danger">
         {{model.error}}
     </div>
-    <form>
+    <form name="model.headingForm">
         <div class="form-group">
             <label for="Heading name">
                 Name
@@ -33,15 +33,17 @@
                    type="text"
                    class="form-control"
                    id="Heading name"
-                   placeholder="Heading name">
+                   placeholder="Heading name"
+                   required/>
         </div>
+        <span ng-if="model.error">{{model.error}}</span>
         <div class="form-group">
             <label for="Heading text">Text</label>
             <input ng-model="model.widget.text"
                    type="text"
                    class="form-control"
                    id="Heading text"
-                   placeholder="Heading text">
+                   placeholder="Heading text"/>
         </div>
         <div class="form-group">
             <div class="form-group">
@@ -67,7 +69,7 @@
     <div class="container">
         <div class="row navbar-text pull-right">
             <div class="col-xs-3 text-center">
-                <a href="#/profile/{{model.userId}}">
+                <a href="#/profile">
                     <span class="glyphicon glyphicon-user"></span>
                 </a>
             </div>

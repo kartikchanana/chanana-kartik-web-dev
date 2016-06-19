@@ -13,10 +13,12 @@
         vm.reorderWidgets = reorderWidgets;
 
         function init() {
+            console.log("came to widget list controller");
             WidgetService
                 .findWidgetsForPageId(vm.pageId)
                 .then(function (response) {
                     vm.widgets = response.data;
+                    console.log(vm.widgets);
                 });
             $(".container")
                 .sortable({

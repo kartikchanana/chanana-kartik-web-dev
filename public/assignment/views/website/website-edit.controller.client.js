@@ -28,13 +28,19 @@
                 });
         }
         function updateWebsite(newWebsite) {
-            WebsiteService
-                .updateWebsite(vm.websiteId,newWebsite)
-                .then(function (response) {
-                    $location.url("/user/"+vm.userId+"/website")
-                },function (error) {
-                    vm.error = "Could not save profile"
-                });
+            if(!newWebsite.name){
+                vm.error = "Website name required";
+            }
+            else {
+
+                WebsiteService
+                    .updateWebsite(vm.websiteId, newWebsite)
+                    .then(function (response) {
+                        $location.url("/user/" + vm.userId + "/website")
+                    }, function (error) {
+                        vm.error = "Could not save profile"
+                    });
+            }
         }
     }
 })();

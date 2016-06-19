@@ -31,8 +31,10 @@
                    type="text"
                    class="form-control"
                    id="Youtube name"
-                   placeholder="Youtube video">
+                   placeholder="Youtube video"
+                   required/>
         </div>
+        <span ng-if="model.error">{{model.error}}</span>
         <div class="form-group">
             <label for="Youtube text">Text</label>
             <input ng-model="model.widget.text"
@@ -68,7 +70,7 @@
     <div class="container">
         <div class="row navbar-text pull-right">
             <div class="col-xs-3 text-center">
-                <a href="#/profile/{{model.userId}}">
+                <a href="#/profile">
                     <span class="glyphicon glyphicon-user"></span>
                 </a>
             </div>

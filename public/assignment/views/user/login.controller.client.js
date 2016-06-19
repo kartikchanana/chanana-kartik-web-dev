@@ -6,19 +6,29 @@
     function LoginController($location, UserService) {
         var vm = this;
 
-        vm.login = function(username, password) {
-            if(username =="" || password == ""){
-                vm.error = "Enter complete information";
+        vm.login = login;
+        
+        function login (username, password) {
+            if(!password && !username){
+                vm.allError= "Enter all details";
+                vm.error= "Enter all details";
+            }
+            else if(!password){
+                vm.pwdError = "Password required";
+                vm.error = "Password required";
+            }else if(!username){
+                vm.nameError = "Username required";
+                vm.error = "Username required";
             }else{
                 UserService
-                    .findUserByCredentials(username, password)
+                    .login(username, password)
                     .then(function(response){
                         var user = response.data;
-                        console.log(response);
+                        console.log("response:" +user);
                         if(user._id) {
-                            $location.url("/profile/" + user._id);
+                            $location.url("/profile");
                         } else {
-                            vm.error = "User not found";
+                            vm.error = response.error;
                         }
                     });
             }

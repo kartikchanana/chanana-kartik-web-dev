@@ -1,0 +1,65 @@
+.logo{
+    height: 60px;
+    width: 130px;
+    padding-bottom: 23px;
+}
+.top-right-button{
+    padding-right: 15px;
+}
+
+body {
+    font-family: Merriweather, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 14px ;
+}
+h1{
+    margin-top: 0;
+    margin-bottom: 0;
+    font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+    color: #fff;
+}
+.top-header-inner{
+    width: 100%;
+    min-height:auto;
+    text-align: center;
+}
+.search-btn{
+    height:34px;
+    border:none;
+}
+.search-bar{
+    width: 400px;
+    opacity: 0.8;
+    border: none;
+    margin:auto;
+}
+hr{
+    max-width: 50px;
+    margin:30px auto;
+    border-color: #3a80c6;
+    border-width: 3px;
+}
+.top-header-div{
+    background-image: url("../images/2.jpg");
+    background-position: center;
+    background-size: cover;
+    width: 100%;
+    min-height: 600px;
+    position: relative;
+    padding: 200px 15px;
+    text-align: center;
+}
+.btn{
+    font-weight: 600;
+    font-size: 16px;
+    font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+}
+.p-main-page{
+    color: rgba(255,255,255, 0.7);
+    font-weight: 300;
+    font-size:16px;
+    margin-bottom: 100px;
+}
+.navbar-fixed-top{
+    background: transparent;
+    height:60px;
+}

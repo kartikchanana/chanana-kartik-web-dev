@@ -21,22 +21,27 @@
     </div>
 </nav>
 
-    <div class="container">
 
-        <form>
+    <div class="container">
+        <div ng-if="model.error" class="alert alert-danger">
+            {{model.error}}
+        </div>
+        <form name="model.newWebsiteForm" novalidate>
             <div class="form-group">
-                <label for="website-name">Website Name</label>
+                <label for="websiteName">Website Name</label>
                 <input ng-model="name"
                        type="text"
                        class="form-control"
-                       id="website-name"
-                       placeholder="Google">
+                       id="websiteName"
+                       placeholder="Google"
+                       required/>
             </div>
+            <span ng-if="model.error">{{model.error}}</span>
             <div class="form-group">
-                <label for="website-description">Website Description</label>
+                <label for="websiteDescription">Website Description</label>
                 <textarea ng-model="description"
                           rows="4"
-                          id="website-description"
+                          id="websiteDescription"
                           class="form-control"
                           placeholder="Description"></textarea>
             </div>
@@ -47,7 +52,7 @@
     <div class="container">
         <div class="row navbar-text pull-right">
             <div class="col-xs-3 text-center">
-                <a href="#/profile/{{model.userId}}">
+                <a href="#/profile">
                     <span class="glyphicon glyphicon-user"></span>
                 </a>
             </div>
