@@ -20,6 +20,7 @@ h1{
 .top-header-inner{
     width: 100%;
     min-height:auto;
+    min-width: auto;
     text-align: center;
 }
 .search-btn{
@@ -27,7 +28,7 @@ h1{
     border:none;
 }
 .search-bar{
-    width: 400px;
+    width: 60%;
     opacity: 0.8;
     border: none;
     margin:auto;
