@@ -11,7 +11,9 @@
                class="form-control"
                placeholder="username"
                id="username"
-               required/>
+               required
+               autocorrect=false
+               autocapitalize="false"/>
         <span ng-if="model.nameError">{{model.nameError}}</span>
         <input ng-model="password"
                type="password"

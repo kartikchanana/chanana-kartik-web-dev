@@ -10,12 +10,19 @@
 body {
     font-family: Merriweather, 'Helvetica Neue', Arial, sans-serif;
     font-size: 14px ;
+    background-color: #696969;
 }
 h1{
     margin-top: 0;
-    margin-bottom: 0;
+    margin-bottom: 10px;
     font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
     color: #fff;
+}
+input.form-control{
+    margin-bottom: 10px;
+}
+div.inner-container{
+    padding-top: 65px;
 }
 .top-header-inner{
     width: 100%;
@@ -61,6 +68,6 @@ hr{
     margin-bottom: 100px;
 }
 .navbar-fixed-top{
-    background: transparent;
+    background: white;
     height:60px;
 }

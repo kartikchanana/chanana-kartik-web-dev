@@ -1,19 +1,37 @@
+<div class="container">
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand">
+                    <img src="./images/2f3f929.png" class="logo">
+                </a>
+                <p class="navbar-text pull-right top-right-button">
+                    <a class="btn btn-info btn-block"
+                       href="#/login">SIGN IN/REGISTER</a>
+                </p>
+            </div>
+        </div>
+    </nav>
+</div>
 
 <div class="container">
-    <h1>Login</h1>
-    <input ng-model="username" type="text"
-           class="form-control"
-           placeholder="username"/>
-    <input ng-model="password" type="password"
-           class="form-control"
-           placeholder="password"/>
-    <a class="btn btn-primary btn-block" ng-click="model.login(username, password)">Login</a>
-    <a class="btn btn-success btn-block"
-       href="#">Register</a>
-    <div class="picture-align-center social-sign-in">
-        <div class="picture">
-            <a class="facebook-action-connect btn" rel="nofollow">
-                <img src="//www.facebook.com/images/fbconnect/login-buttons/connect_light_large_long.gif" alt=""></a>
+    <div class="inner-container">
+        <h1>Login</h1>
+        <input ng-model="username" type="text"
+               class="form-control"
+               placeholder="username"/>
+        <input ng-model="password" type="password"
+               class="form-control"
+               placeholder="password"/>
+        <a class="btn btn-primary btn-block" ng-click="model.login(username, password)">Login</a>
+        <a class="btn btn-success btn-block"
+           href="#">Register</a>
+        <div class="picture-align-center social-sign-in">
+            <div class="picture">
+                <a class="facebook-action-connect btn" rel="nofollow">
+                    <img src="//www.facebook.com/images/fbconnect/login-buttons/connect_light_large_long.gif" alt=""></a>
+            </div>
         </div>
     </div>
+
 </div>
