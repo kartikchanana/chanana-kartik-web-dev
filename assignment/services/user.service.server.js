@@ -15,7 +15,7 @@ module.exports = function (app, models) {
     ];
 
     app.get("/api/user", getUsers);
-    app.post("/api/login", passport.authenticate('local'), login);
+    app.post("/api/login", passport.authenticate('assgn'), login);
     app.get("/api/user/:userId", findUserById);
     app.post("/api/user", createUser);
     app.put("/api/user/:userId", updateUser);
@@ -30,7 +30,7 @@ module.exports = function (app, models) {
             failureRedirect: '/assignment/#/login'
         }));
 
-    passport.use(new LocalStrategy(localStrategy));
+    passport.use('assgn', new LocalStrategy(assgnlocalStrategy));
     passport.serializeUser(serializeUser);
 
     passport.deserializeUser(deserializeUser);
@@ -42,7 +42,7 @@ module.exports = function (app, models) {
     };
     passport.use('facebook', new FacebookStrategy(facebookConfig, facebookLogin));
 
-    function localStrategy(username, password, done) {
+    function assgnlocalStrategy(username, password, done) {
         userModel
             .findUserByUsername(username)
             .then(

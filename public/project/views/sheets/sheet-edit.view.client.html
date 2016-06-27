@@ -1,0 +1,161 @@
+
+<!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#/">NoteScorer</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li ng-show="model.flag == 0">
+                    <a href="#/login">Sign In</a>
+                </li>
+                <li ng-show="model.flag == 1">
+                    <a href="" ng-click="model.logout()">Sign Out</a>
+                </li>
+                <li ng-show="model.flag == 0">
+                    <a href="#/register">Register</a>
+                </li>
+                <li>
+                    <a href="#/contact">Contact us</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+<!-- Page Content -->
+<div class="container push-down-further">
+
+    <div class="row">
+
+        <!-- Blog Post Content Column -->
+        <div class="col-lg-7">
+
+            <!-- Blog Post -->
+
+            <!-- Title -->
+            <label for="noteTitle">Title</label>
+            <div class="form-group">
+                <input type="text"
+                       ng-model="model.note.title"
+                       id="noteTitle"
+                       placeholder="Title"/>
+            </div>
+
+
+            <!-- Author -->
+            <p class="lead">
+                by <a href="#">{{model.note.user.username}}</a>
+            </p>
+
+            <hr>
+            <!-- Date/Time -->
+            <!--<p><span class="glyphicon glyphicon-time"></span> Posted on August 24, 2013 at 9:00 PM</p>-->
+            <!--<hr>-->
+
+            <!--&lt;!&ndash; Preview Image &ndash;&gt;<img src="https://s3.amazonaws.com/static.musescore.com/329716/4495876ba1/score_0.png" style="width: 100%; height: 100%;">-->
+            <img class="img-responsive" ng-src="{{model.note.url}}" alt="">
+
+
+            <hr>
+
+            <!-- Blog Comments -->
+            <!--<div ng-show="model.flag == 0" class="well">-->
+                <!--Login to leave a comment on this piece-->
+            <!--</div>-->
+            <!--&lt;!&ndash; Comments Form &ndash;&gt;-->
+            <!--<div ng-show="model.flag == 1" class="well">-->
+                <!--<h4>Leave a Comment:</h4>-->
+                <!--<form role="form">-->
+                    <!--<div class="form-group">-->
+                        <!--<textarea ng-model="comment" class="form-control" rows="3"></textarea>-->
+                    <!--</div>-->
+                    <!--<button ng-click="model.Comment(comment)" class="btn btn-primary">Submit</button>-->
+                <!--</form>-->
+            <!--</div>-->
+
+            <!--<hr>-->
+
+            <!-- Posted Comments -->
+
+            <!-- Comment -->
+            <div ng-show="model.flag == 1" ng-repeat="comment in model.comments" class="media">
+                <a class="pull-left" href="">
+                    <img class="media-object" src="http://placehold.it/64x64" alt="">
+                </a>
+                <div class="media-body" >
+                    <h4 class="media-heading"><a>{{comment.userId}}</a>
+                        <small>{{comment.date}}</small>
+                    </h4>
+                    {{comment.comment}}
+                    <button class="btn btn-danger" ng-click="model.deleteComment(comment.date)">Delete comment</button>
+                </div>
+            </div>
+            <button class="btn btn-primary" ng-click="model.updateNote(model.note)">Update Note</button>
+            <button class="btn btn-danger" ng-click="model.deleteNote()">Delete Note</button>
+
+
+        </div>
+
+
+        <!-- Blog Sidebar Widgets Column -->
+        <div class="col-md-5">
+
+            <!-- Blog Categories Well -->
+            <div class="well">
+                <h4>Info</h4>
+                <hr>
+                <div class="row">
+                    <div class="col-lg-3">
+                        <ul class="list-unstyled">
+                            <li>Pages</li>
+                            <li>Duration</li>
+                            <li>KeySig</li>
+                            <li>Total Parts</li>
+                            <li>Parts</li>
+                            <li>License</li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-9">
+                        <ul class="list-unstyled">
+                            <li class="lighter">{{model.note.metadata.pages}}</li>
+                            <li class="lighter">{{model.note.metadata.duration}}</li>
+                            <li class="lighter">{{model.note.metadata.keysig}}</li>
+                            <li class="lighter">{{model.note.metadata.parts.length}}</li>
+                            <li class="lighter">{{model.ipartsData}}</li>
+                            <li class="lighter">{{model.note.license}}</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /.row -->
+            </div>
+
+        </div>
+
+    </div>
+    <!-- /.row -->
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="row">
+            <div class="col-lg-12">
+                <p>Copyright &copy; NoteScorer 2016</p>
+            </div>
+        </div>
+        <!-- /.row -->
+    </footer>
+
+</div>

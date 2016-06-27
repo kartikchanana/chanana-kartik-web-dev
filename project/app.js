@@ -4,7 +4,7 @@ module.exports= function(app, mongoose) {
 
 
     require("./services/user.service.server.js")(app, models);
-    // require("./services/website.service.server.js")(app, models);
+    require("./services/note.service.server.js")(app, models);
     // require("./services/widget.service.server.js")(app, models);
     // require("./services/page.service.server.js")(app, models);
 };

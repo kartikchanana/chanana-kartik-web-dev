@@ -1,19 +1,69 @@
-<div class="container">
-    <h1>Register</h1>
-    <input ng-model="username"
-           type="text"
-           class="form-control"
-           placeholder="username"/>
-    <input ng-model="password"
-           type="password"
-           class="form-control"
-           placeholder="password"/>
-    <input ng-model="verifyPassword"
-           type="password"
-           class="form-control"
-           placeholder="very password"/>
-    <a class="btn btn-primary btn-block"
-       ng-click="model.createUser(username,password,verifyPassword)">Register</a>
-    <a class="btn btn-danger  btn-block"
-       href="#/login">Cancel</a>
+
+<!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#/">NoteScorer</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#/login">Sign In</a>
+                </li>
+                <li>
+                    <a href="#/register">Register</a>
+                </li>
+                <li>
+                    <a href="#/contact">Contact us</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+<div class="container push-down">
+
+    <div ng-if="model.error" class="alert alert-danger">
+        {{model.error}}
+    </div>
+
+    <form name="model.registerForm" novalidate>
+        <h1>Register</h1>
+        <input ng-model="username"
+               type="text"
+               id="username"
+               class="form-control"
+               placeholder="username"
+               required/>
+        <span ng-show="model.nameError">Please provide valid username</span>
+        <input ng-model="password"
+               type="password"
+               id="password"
+               class="form-control"
+               placeholder="password"
+               required/>
+        <span ng-show="model.pwdError">Please provide valid password</span>
+        <input ng-model="verifyPassword"
+               type="password"
+               id="verifyPassword"
+               class="form-control"
+               placeholder="very password"
+               required/>
+        <span ng-show="model.vpwdError">Please provide valid verify password</span>
+        <a class="btn btn-primary btn-block"
+           ng-click="model.createUser(username,password,verifyPassword)">Register</a>
+        <a class="btn btn-danger  btn-block"
+           href="#/login">Cancel</a>
+    </form>
 </div>

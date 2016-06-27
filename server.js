@@ -17,7 +17,7 @@ app.use(passport.session());
 // configure a public directory to host static content
 app.use(express.static(__dirname + '/public'));
 
-var connectionString = 'mongodb://127.0.0.1:27017/cs5610summer1';
+var connectionString = 'mongodb://127.0.0.1:27017/projectdata';
 
 if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
     connectionString = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
@@ -34,8 +34,8 @@ var db= mongoose.connect(connectionString);
 var ipaddress = process.env.OPENSHIFT_NODEJS_IP;
 var port      = process.env.OPENSHIFT_NODEJS_PORT || 3000;
 
-var assignment = require("./assignment/app.js");
-assignment(app, mongoose, db);
+// var assignment = require("./assignment/app.js");
+// assignment(app, mongoose, db);
 
 require("./project/app.js")(app,mongoose);
 

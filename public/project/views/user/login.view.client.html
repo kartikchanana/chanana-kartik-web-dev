@@ -1,37 +1,66 @@
-<div class="container">
-    <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand">
-                    <img src="./images/2f3f929.png" class="logo">
-                </a>
-                <p class="navbar-text pull-right top-right-button">
-                    <a class="btn btn-info btn-block"
-                       href="#/login">SIGN IN/REGISTER</a>
-                </p>
-            </div>
-        </div>
-    </nav>
-</div>
 
-<div class="container">
-    <div class="inner-container">
-        <h1>Login</h1>
-        <input ng-model="username" type="text"
-               class="form-control"
-               placeholder="username"/>
-        <input ng-model="password" type="password"
-               class="form-control"
-               placeholder="password"/>
-        <a class="btn btn-primary btn-block" ng-click="model.login(username, password)">Login</a>
-        <a class="btn btn-success btn-block"
-           href="#">Register</a>
-        <div class="picture-align-center social-sign-in">
-            <div class="picture">
-                <a class="facebook-action-connect btn" rel="nofollow">
-                    <img src="//www.facebook.com/images/fbconnect/login-buttons/connect_light_large_long.gif" alt=""></a>
-            </div>
+<!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#/">NoteScorer</a>
         </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li ng-show="">
+                    <a href="#/login">Sign In</a>
+                </li>
+                <li>
+                    <a href="#/register">Register</a>
+                </li>
+                <li>
+                    <a href="#/contact">Contact us</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
     </div>
+    <!-- /.container -->
+</nav>
+<div class="container push-down">
+
+    <div ng-show="model.error" class="alert alert-danger">
+        {{model.error}}
+    </div>
+
+    <form name="model.loginForm" novalidate>
+        <h1>Login</h1>
+        <input ng-model="username"
+               type="text"
+               class="form-control"
+               placeholder="username"
+               id="username"
+               required
+               autocorrect=false
+               autocapitalize="false"/>
+        <span ng-if="model.nameError">{{model.nameError}}</span>
+        <input ng-model="password"
+               type="password"
+               class="form-control"
+               placeholder="password"
+               id="password"
+               required/>
+        <span ng-if="model.pwdError">{{model.pwdError}}</span>
+        <button type="submit" ng-click="model.login(username, password)" class="btn btn-primary btn-block">Login</button>
+        <a class="btn btn-success btn-block"
+           href="#/register">Register</a>
+        <a href="/auth/google" class="btn btn-danger btn-block">
+            <span class="fa fa-google-plus"></span>
+            Google Login
+        </a>
+    </form>
 
 </div>
