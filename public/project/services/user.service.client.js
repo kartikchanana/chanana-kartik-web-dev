@@ -23,10 +23,14 @@
             findOwnScores: findOwnScores,
             findLiked: findLiked,
             viewFollowed: viewFollowed,
-            getAllUsers: getAllUsers
+            getAllUsers: getAllUsers,
+            unlikeSheet: unlikeSheet
         };
         return api;
 
+        function unlikeSheet(noteId, userId) {
+            return $http.put("/api/unlikeit/" +noteId + "/" + userId);
+        }
         function getAllUsers() {
             return $http.get("/api/allUsers");
         }

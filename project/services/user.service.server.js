@@ -8,7 +8,7 @@ module.exports = function (app, models) {
     var userModel = models.userModel;
     var noteModel = models.noteModel;
     
-    // app.put("/api/unfollowown/:unfollowId/:userId", unfollowOwnUser);
+    app.put("/api/unlikeit/:noteId/:userId", unlikeSheet);
     app.get("/api/allUsers", getAllUsers);
     app.get("/api/viewFollowed/:userId", viewFollowed);
     app.get("/api/renderLiked/:userId" ,renderLiked);
@@ -109,6 +109,21 @@ module.exports = function (app, models) {
             );
     }
 
+    function unlikeSheet(req,res) {
+        var noteId = req.params.noteId;
+        var userId = req.params.userId;
+        console.log(noteId);
+        console.log(userId);
+        userModel
+            .unlikeSheet(noteId, userId)
+            .then(function (response) {
+                console.log("|||||");
+                console.log(response);
+                res.send(200);
+            }, function (error) {
+                res.statusCode(400).send(error);
+            });
+    }
     function getAllUsers(req, res) {
         userModel
             .getAllUsers()
@@ -279,19 +294,6 @@ module.exports = function (app, models) {
                 res.statusCode(404).send(error);
             });
     }
-    // function unfollowOwnUser(req,res) {
-    //     var unfollowId = req.params.unfollowId;
-    //     var userId = req.params.userId;
-    //     userModel
-    //         .unfollowUser(unfollowId, userId)
-    //         .then(function (stats) {
-    //             console.log(stats);
-    //             res.send(200);
-    //         }, function(error) {
-    //             res.statusCode(404).send(error);
-    //         });
-    //
-    // }
     function updateUser(req, res) {
         var id = req.params.userId;
         var newUser = req.body;

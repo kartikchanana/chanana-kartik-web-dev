@@ -40,7 +40,7 @@
         <div class="row">
 
             <!-- Blog Post Content Column -->
-            <div class="col-lg-7">
+            <div class="col-lg-7 col-md-7 col-sm-7">
 
                 <!-- Blog Post -->
 
@@ -49,7 +49,7 @@
 
                 <!-- Author -->
                 <p class="lead">
-                    by <a href="#">{{model.note.user.username}}</a>
+                    by {{model.note.user.username}}
                 </p>
 
                 <hr>
@@ -101,7 +101,7 @@
 
 
             <!-- Blog Sidebar Widgets Column -->
-            <div class="col-md-5">
+            <div class="col-lg-5 col-md-5 col-sm-5">
 
                 <!-- Blog Search Well -->
                 <div class="well">
@@ -120,41 +120,41 @@
                 <!-- Side Widget Well -->
                 <div class="well">
                     <div class="row">
-                        <div class="col-lg-9">
+                        <div class="col-lg-8 col-md-8 col-sm-8">
                             <h4>{{model.note.user.username}}</h4>
                         </div>
-                        <div ng-if="model.userFollowed == 1" class="col-lg-3">
+                        <div ng-if="model.userFollowed == 1" class="col-lg-3 col-md-3 col-sm-3">
                             <button class="btn btn-default" ng-click="model.unfollowUser()">Unfollow</button>
                             {{model.returnData}}
                         </div>
-                        <div ng-if="model.userFollowed == 0" class="col-lg-3">
+                        <div ng-if="model.userFollowed == 0" class="col-lg-3 col-md-3 col-sm-3">
                             <button class="btn btn-default" ng-click="model.followUser()">Follow</button>
                             {{model.returnData}}
                         </div>
                     </div>
                     <br>
                     <div class="row">
-                        <div class="col-lg-4" ng-show="model.userLiked==0">
+                        <div class="col-lg-4 col-md-4 col-sm-4" ng-show="model.userLiked==0">
                             <button  ng-click="model.likeSheet()">
-                                <span class="glyphicon glyphicon-heart"></span>     Like
+                                <span class="glyphicon glyphicon-heart"></span>  Like
                             </button>
                             {{model.returnData}}
                         </div>
-                        <div class="col-lg-4" ng-show="model.userLiked==1">
+                        <div class="col-lg-4 col-md-4 col-sm-4" ng-show="model.userLiked==1">
                             <button  ng-click="model.unlikeSheet()">
-                                <span class="glyphicon glyphicon-heart"></span>     Unlike
+                                <span class="glyphicon glyphicon-heart"></span>  Unlike
                             </button>
                             {{model.returnData}}
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-4 col-md-4 col-sm-4">
                             <button ng-click="model.Comment()">
-                                <span class="glyphicon glyphicon-comment"></span>     Comment
+                                <span class="glyphicon glyphicon-comment"></span>  Comment
                             </button>
                             {{model.returnData}}
                         </div>
-                        <div class="col-lg-4" ng-show="model.flag ==1">
+                        <div class="col-lg-4 col-md-4 col-sm-4" ng-show="model.flag ==1">
                             <button><a href="#/sheet/new">
-                                <span class="glyphicon glyphicon-upload"></span>      Upload
+                                <span class="glyphicon glyphicon-upload"></span>  Upload
                             </a>
                             </button>
                         </div>
@@ -166,7 +166,7 @@
                     <h4>Info</h4>
                     <hr>
                     <div class="row">
-                        <div class="col-lg-3">
+                        <div class="col-lg-3 col-md-3 col-sm-3">
                             <ul class="list-unstyled">
                                 <li>Pages</li>
                                 <li>Duration</li>
@@ -177,7 +177,7 @@
                                 <li>Privacy</li>
                             </ul>
                         </div>
-                        <div class="col-lg-9">
+                        <div class="col-lg-9 col-md-9 col-sm-9">
                             <ul class="list-unstyled">
                                 <li class="lighter">{{model.note.metadata.pages}}</li>
                                 <li class="lighter">{{model.note.metadata.duration}}</li>
@@ -202,7 +202,7 @@
         <!-- Footer -->
         <footer>
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-11">
                     <p>Copyright &copy; NoteScorer 2016</p>
                 </div>
             </div>

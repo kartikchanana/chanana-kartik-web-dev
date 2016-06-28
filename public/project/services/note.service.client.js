@@ -53,9 +53,6 @@
             console.log(userId);
             return $http.put("/api/unfollow/" + unfollowId + "/" + userId);
         }
-        // function unfollowOwnUser(unfollowId, userId) {
-        //     return $http.put("/api/unfollowown/" + unfollowId + "/" + userId);
-        // }
         function unlikeSheet(noteId, userId) {
             return $http.put("/api/unlike/" + noteId + "/" + userId);
         }

@@ -42,6 +42,9 @@ module.exports = function() {
         return User.findOne({"google.id": id});
     }
     function unlikeSheet(noteId, userId) {
+        console.log("reached user model to unlike");
+        console.log("at" +noteId);
+        console.log("at" +userId);
         return User.update({_id: userId},
             {$pull: {liked: noteId}});
     }

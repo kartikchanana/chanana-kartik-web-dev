@@ -29,7 +29,7 @@
 
     <div class="container push-down-further">
         <div class="row">
-            <div class="col-lg-8" ng-show="model.profileflag ==1">
+            <div class="col-lg-8 col-md-8 col-sm-8" ng-show="model.profileflag ==1">
                 <div ng-if="model.success" class="alert alert-success alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <strong>Success!</strong> {{model.success}}
@@ -71,7 +71,7 @@
             </div>
 
 
-            <div class="col-lg-8" ng-show="model.editingUserflag ==1">
+            <div class="col-lg-8 col-md-8 col-sm-8" ng-show="model.editingUserflag ==1">
                 <div ng-if="model.success" class="alert alert-success alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <strong>Success!</strong> {{model.success}}
@@ -112,7 +112,7 @@
             </div>
 
 
-            <div class="col-lg-8" ng-show="model.sheetsflag ==1">
+            <div class="col-lg-8 col-md-8 col-sm-8" ng-show="model.sheetsflag ==1">
                     <div ng-repeat="note in model.apiNotes">
                         <div class="col-md-2 thumb-img">
                             <a ng-show="note.apiId == 0"
@@ -140,7 +140,7 @@
 
 
 
-            <div class="col-lg-8" ng-show="model.likedflag ==1">
+            <div class="col-lg-8 col-md-8 col-sm-8" ng-show="model.likedflag ==1">
                 <div ng-repeat="note in model.apiNotes">
                     <div class="col-md-2 img-thumb">
                         <a ng-show="note.apiId == 0"
@@ -164,11 +164,12 @@
                         <h4 style="color: #2e6da4">by {{note.user.username}}</h4>
                         <p>{{note.metadata.pages}} pages | {{note.metadata.parts.length}} parts| {{note.view_count}} views| {{note.download_count}} downloads</p>
                     </div>
+                    <button class="btn btn-danger" ng-click="model.unlike(note)">Unlike</button>
                 </div>
             </div>
 
 
-            <div class="col-lg-8" ng-show="model.allscores == 1">
+            <div class="col-lg-8 col-md-8 col-sm-8" ng-show="model.allscores == 1">
                 <div ng-repeat="score in model.allScores">
                     <div class="col-md-2 thumb-img">
                         <a
@@ -186,7 +187,7 @@
             </div>
 
 
-            <div class="col-lg-8" ng-show="model.followedflag ==1">
+            <div class="col-lg-8 col-md-8 col-sm-8" ng-show="model.followedflag ==1">
                 <div ng-repeat="follow in model.followedd">
                     <div class="col-md-6 img-thumb">
                         <h2>
@@ -198,7 +199,7 @@
             </div>
 
 
-            <div class="col-lg-8" ng-show="model.allusersflag  ==1">
+            <div class="col-lg-8 col-md-8 col-sm-8" ng-show="model.allusersflag  ==1">
                 <div ng-repeat="user in model.allUsers">
                     <div class="col-md-6 img-thumb">
                         <h2>
@@ -208,7 +209,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4" ng-show="model.admin == 0">
+            <div class="col-lg-4 col-md-4 col-sm-4" ng-show="model.admin == 0">
                 <div class="well">
                     <a href="" ng-click="model.viewSheets()"><h5>Sheet Music</h5></a>
                     <a href="" ng-click="model.viewLiked()"><h5>Liked scores</h5></a>
@@ -217,7 +218,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-4" ng-show="model.admin == 1">
+            <div class="col-lg-4 col-md-4 col-sm-4" ng-show="model.admin == 1">
                 <div class="well">
                     <a href="" ng-click="model.getAllScores()"><h5>All Scores</h5></a>
                     <a href="" ng-click="model.getAllUsers()"><h5>All users</h5></a>

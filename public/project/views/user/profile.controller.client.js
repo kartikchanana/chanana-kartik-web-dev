@@ -26,6 +26,7 @@
         vm.getAllScores = getAllScores;
         vm.getAllUsers = getAllUsers;
         vm.getUser = getUser;
+        vm.unlike = unlike;
 
         function init() {
             UserService
@@ -125,25 +126,26 @@
                             console.log(response);
                         });
                 }
-                // if(user.id.length < 10){
-                //     NoteService
-                //         .unfollowUser(user.id, $rootScope.currentUser._id)
-                //         .then(function (response) {
-                //             vm.userFollowed = 0;
-                //             console.log("unfollowed" + vm.userFollowed);
-                //             console.log(response);
-                //         });
-                // }else if(user.uid.length >10){
-                //     NoteService
-                //         .unfollowOwnUser(user.uid, $rootScope.currentUser._id)
-                //         .then(function (response) {
-                //             vm.userFollowed = 0;
-                //             console.log("unfollowed" + vm.userFollowed);
-                //             console.log(response);
-                //         });
-                // }
-
             }
+        }
+
+        function unlike(note) {
+            if(note._id){
+                var noteId = note._id;
+                console.log(noteId);
+            }else if(note.id){
+                var noteId = note.id+"";
+                console.log(noteId);
+            }
+            NoteService
+                .unlikeSheet(noteId, $rootScope.currentUser._id)
+                .then(function (response) {
+                    UserService
+                        .unlikeSheet(noteId, $rootScope.currentUser._id)
+                        .then(function (response) {
+                            console.log(response);
+                        })
+                });
         }
 
         function logout() {
@@ -213,8 +215,6 @@
                                 .findNote(liked[i]+"")
                                 .then(function (response) {
                                     vm.apiNotes.push(response.data);
-                                    console.log("sheet found: ");
-                                    console.log(response);
                                 });
                         }
                     }

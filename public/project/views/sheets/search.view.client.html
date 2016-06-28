@@ -39,7 +39,7 @@
 
         <!-- Page Heading -->
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-12 col-md-12 col-sm-12">
                 <h1 class="page-header">Sheet Music</h1>
             </div>
         </div>
@@ -48,9 +48,9 @@
 
         <!-- Project One -->
         <div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-8 col-md-8 col-sm-9">
                 <div ng-repeat="note in model.apiNotes">
-                    <div class="col-md-2 img-thumb">
+                    <div class="col-lg-2 col-md-2 col-sm-3 img-thumb">
                         <a ng-show="note.apiId == 0"
                            href="#/results/ownsheet/{{note._id}}"
                            ng-click="model.setUrl()">
@@ -62,7 +62,7 @@
                             <img class="img-responsive thumb-img" ng-src="http://static.musescore.com/{{note.id}}/{{note.secret}}/thumb.png" alt="">
                         </a>
                     </div>
-                    <div class="col-md-10">
+                    <div class="col-lg-10 col-md-10 col-sm-9">
                         <h3><a ng-show="note.apiId == 0"
                                ng-click="model.setUrl()"
                                href="#/results/ownsheet/{{note._id}}">{{note.title}}</a></h3>
@@ -75,7 +75,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-lg-4 col-md-4 col-sm-3">
                 <!-- Blog Search Well -->
                 <div class="well">
                     <h4>New Search</h4>
@@ -115,7 +115,7 @@
 
         <!-- Pagination -->
         <div class="row text-center">
-            <div class="col-lg-12">
+            <div class="col-md-12 col-lg-12 col-sm-12">
                 <ul class="pagination">
                     <li>
                         <a ng-click="model.decreasePages()">&laquo;</a>
@@ -136,7 +136,7 @@
         <!-- Footer -->
         <footer>
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-md-12 col-lg-12 col-sm-12">
                     <p>Copyright &copy; NoteScorer 2016</p>
                 </div>
             </div>

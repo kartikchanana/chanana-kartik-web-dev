@@ -27,8 +27,6 @@
             }else{
                 vm.flag = 1;
             }
-            console.log("followed status: " + vm.userFollowed);
-            console.log("liked status: " + vm.userLiked);
             NoteService
                 .findNote(vm.noteId)
                 .then(
@@ -46,7 +44,6 @@
                                 var noteData = response.data;
                                 if(noteData != null){
                                     vm.comments = noteData.comments;
-                                    console.log(vm.comments);
                                 }
                             });
                     }
@@ -62,6 +59,7 @@
                     .Comment(comment,vm.noteId, $rootScope.currentUser._id)
                     .then(function (response) {
                         console.log("Successful");
+                        init();
                     });
             }
         }
@@ -71,15 +69,18 @@
                 .logout()
                 .then(
                     function (response) {
-                        $location.url("/results/" + vm.searchText + "/" + vm.pageNo + "/sheet/" + vm.noteId + "/" + vm.noteSecret + "/" + vm.pageNo);
                         vm.flag = 0;
+                        $location.url("/results/" + vm.searchText + "/" + vm.pageNo + "/sheet/" + vm.noteId + "/" + vm.noteSecret + "/" + vm.pageNo);
+
                     },
                     function () {
-                        $location.url("/results/" + vm.searchText + "/" + vm.pageNo + "/sheet/" + vm.noteId + "/" + vm.noteSecret + "/" + vm.pageNo);
                         vm.flag = 1;
+                        $location.url("/results/" + vm.searchText + "/" + vm.pageNo + "/sheet/" + vm.noteId + "/" + vm.noteSecret + "/" + vm.pageNo);
+
                     }
                 )
         }
+
         function likeSheet() {
             if($rootScope.currentUser == null){
                 vm.returnData = "Log in to continue";

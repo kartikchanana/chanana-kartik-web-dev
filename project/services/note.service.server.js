@@ -92,16 +92,20 @@ module.exports = function (app, models) {
     function unlikeSheet(req,res) {
         var noteId = req.params.noteId;
         var userId = req.params.userId;
+        console.log(noteId);
+        console.log(userId);
         if(noteId.length<10){
             noteModel
                 .unlikeApiSheet(noteId, userId)
                 .then(function (stats) {
                     console.log(stats);
-                    userModel
-                        .unlikeSheet(noteId, userId)
-                        .then(function (response) {
-                            res.send(200);
-                        });
+                    // userModel
+                    //     .unlikeSheet(noteId, userId)
+                    //     .then(function (response) {
+                    //         console.log("|||||");
+                    //         console.log(response);
+                    //         res.send(200);
+                    //     });
                 }, function(error) {
                     res.statusCode(404).send(error);
                 });
@@ -109,7 +113,6 @@ module.exports = function (app, models) {
             noteModel
                 .unlikeOwnSheet(noteId, userId)
                 .then(function (stats) {
-                    console.log(stats);
                     res.send(200);
                 }, function(error) {
                     res.statusCode(404).send(error);

@@ -43,6 +43,7 @@ module.exports = function() {
         return Note.find({apiId: 0});
     }
     function unlikeApiSheet(noteId, userId) {
+        console.log("reached note model to unlike");
         return Note.update({apiId: noteId},
             {$pull: {liker: userId}});
     }
