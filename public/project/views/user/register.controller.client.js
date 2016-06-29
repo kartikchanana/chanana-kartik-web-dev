@@ -21,7 +21,7 @@
                 vm.allError = "Password and verify password don't match";
                 vm.error = "Password and verify password don't match";
             }
-            else{
+            else{ 
                 UserService
                     .register(username, password, verifyPassword)
                     .then(function (response){
