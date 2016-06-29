@@ -24,6 +24,9 @@
                 <li ng-show="model.flag == 0">
                     <a href="#/register">Register</a>
                 </li>
+                <li ng-show="model.flag == 1">
+                    <a href="#/profile">Profile</a>
+                </li>
             </ul>
         </div>
         <!-- /.navbar-collapse -->
@@ -46,7 +49,7 @@
 
                 <!-- Author -->
                 <p class="lead">
-                    by <a href="#">{{model.note.user.username}}</a>
+                    by<a href="#/checkProfile/{{model.note.user.username}}/{{model.note.user.uid}}"> {{model.note.user.username}}</a>
                 </p>
 
                 <hr>
@@ -69,7 +72,7 @@
                     <h4>Leave a Comment:</h4>
                     <form role="form">
                         <div class="form-group">
-                            <textarea ng-model="comment" class="form-control" rows="3"></textarea>
+                            <textarea ng-model="comment" class="form-control" id="commentArea" rows="3"></textarea>
                         </div>
                         <button ng-click="model.Comment(comment)" class="btn btn-primary">Submit</button>
                     </form>
@@ -85,8 +88,8 @@
                         <img class="media-object" src="http://placehold.it/64x64" alt="">
                     </a>
                     <div class="media-body" >
-                        <h4 class="media-heading"><a>{{comment.userId}}</a>
-                            <small>{{comment.date}}</small>
+                        <h4 class="media-heading"><a href="">{{comment.userId}}</a>
+                            <small>{{comment.date.substring(0,10)}}</small>
                         </h4>
                         {{comment.comment}}
                     </div>

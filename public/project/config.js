@@ -6,7 +6,7 @@
     function Config($routeProvider) {
         $routeProvider
             .when("/", {
-                templateUrl: "views/home.html",
+                templateUrl: "views/home.view.client.html",
                 controller: "HomeController",
                 controllerAs: "model",
                 resolve: {
@@ -19,6 +19,14 @@
                 controllerAs: "model",
                 resolve: {
                     loggedIn: checkLoggedIn1
+                }
+            })
+            .when("/profile", {
+                templateUrl: "views/user/profile.view.client.html",
+                controller: "ProfileController",
+                controllerAs: "model",
+                resolve: {
+                    loggedIn: checkLoggedIn
                 }
             })
             .when("/results/sheet/:noteId", {
@@ -71,12 +79,12 @@
                 controller: "RegisterController",
                 controllerAs: "model"
             })
-            .when("/profile", {
-                templateUrl: "views/user/profile.view.client.html",
-                controller: "ProfileController",
+            .when("/checkProfile/:username/:userId", {
+                templateUrl: "views/user/profile-checkout.view.client.html",
+                controller: "ProfileCheckoutController",
                 controllerAs: "model",
                 resolve: {
-                    loggedIn: checkLoggedIn
+                    loggedIn: checkLoggedIn1
                 }
             });
 
@@ -98,7 +106,6 @@
                     },
                     function (err) {
                         $location.url("/");
-
                     }
                 );
             return deferred.promise;
@@ -115,14 +122,15 @@
                         if(user == '0'){
                             $rootScope.currentUser = null;
                             deferred.reject();
+                            $location.url("/login");
                         }else{
                             $rootScope.currentUser = user;
                             deferred.resolve();
+
                         }
                     },
                     function (err) {
                         $location.url("/");
-
                     }
                 );
             return deferred.promise;

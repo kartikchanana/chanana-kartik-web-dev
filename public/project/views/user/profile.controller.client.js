@@ -22,6 +22,7 @@
         vm.allscores = 0;
         vm.editingUserflag = 0;
         vm.apiNotes=[];
+        vm.likedNotes=[];
         vm.unfollowUser =unfollowUser;
         vm.getAllScores = getAllScores;
         vm.getAllUsers = getAllUsers;
@@ -37,10 +38,10 @@
                         vm.admin = 1;
                         vm.sheetsflag = 0;
                         vm.followedflag = 0;
-                        console.log("sheet flag " + vm.sheetsflag);
-                        console.log("profileflag " + vm.profileflag);
-                        console.log("admin " + vm.admin);
-                        console.log("followedflag " + vm.followedflag);
+                        vm.editingUserflag = 0;
+                        vm.profileflag = 0;
+                        vm.allusersflag =0;
+                        vm.allscores = 0;
                     }
                 });
         }
@@ -108,13 +109,11 @@
             if($rootScope.currentUser == null){
                 vm.returnData = "Log in to continue";
             }else{
-                console.log(user);
                 if(user._id){
                     NoteService
                         .unfollowUser(user._id, $rootScope.currentUser._id)
                         .then(function (response) {
                             vm.userFollowed = 0;
-                            console.log("unfollowed" + vm.userFollowed);
                             console.log(response);
                         });
                 }else if(user.id){
@@ -122,7 +121,6 @@
                         .unfollowUser(user.id, $rootScope.currentUser._id)
                         .then(function (response) {
                             vm.userFollowed = 0;
-                            console.log("unfollowed" + vm.userFollowed);
                             console.log(response);
                         });
                 }
@@ -137,16 +135,19 @@
                 var noteId = note.id+"";
                 console.log(noteId);
             }
-            NoteService
-                .unlikeSheet(noteId, $rootScope.currentUser._id)
+            UserService
+                .unlikeSheetUser(noteId,$rootScope.currentUser._id)
                 .then(function (response) {
-                    UserService
-                        .unlikeSheet(noteId, $rootScope.currentUser._id)
+                    NoteService
+                        .unlikeSheet(noteId,$rootScope.currentUser._id)
                         .then(function (response) {
                             console.log(response);
-                        })
+                        });
+                    console.log(response);
+                    vm.userLiked = 0;
                 });
         }
+        
 
         function logout() {
             UserService
@@ -168,10 +169,6 @@
             vm.allusersflag =0;
             vm.allscores = 0;
             vm.editingUserflag = 0;
-            console.log("sheet flag " + vm.sheetsflag);
-            console.log("profileflag " + vm.profileflag);
-            console.log("likedflag flag " + vm.likedflag);
-            console.log("followedflag " + vm.followedflag);
             vm.followedd =[];
             UserService
                 .viewFollowed($rootScope.currentUser._id)
@@ -185,7 +182,6 @@
                                 .findUserById(followed[i]+"")
                                 .then(function (response) {
                                     var data = response.data;
-                                    console.log(data);
                                     vm.followedd.push(data);
                                 });
                         }
@@ -200,22 +196,31 @@
             vm.allusersflag =0;
             vm.allscores= 0;
             vm.editingUserflag = 0;
+            vm.likedNotes=[];
             UserService
                 .findLiked($rootScope.currentUser._id)
                 .then(function (response) {
                     if(response.data == null){
                         vm.likecount = 0;
-                        console.log("nothing to display");
                     }else{
-                        console.log("this one");
                         var liked = response.data.liked;
                         console.log(liked);
                         for(i=0; i<liked.length; i++){
-                            NoteService
-                                .findNote(liked[i]+"")
-                                .then(function (response) {
-                                    vm.apiNotes.push(response.data);
-                                });
+                            if(liked[i].length <10){
+                                NoteService
+                                    .findNote(liked[i])
+                                    .then(function (response) {
+                                        console.log(response.data);
+                                        vm.likedNotes.push(response.data);
+                                    });
+                            }else{
+                                NoteService
+                                    .findUserScore(liked[i])
+                                    .then(function (response) {
+                                        vm.likedNotes.push(response.data);
+                                    });
+                            }
+
                         }
                     }
                 })
@@ -228,21 +233,18 @@
             vm.allusersflag =0;
             vm.allscores = 0;
             vm.editingUserflag = 0;
-            console.log("sheet flag " + vm.sheetsflag);
-            console.log("profileflag " + vm.profileflag);
+            vm.apiNotes=[];
             UserService
                 .findOwnScores($rootScope.currentUser._id)
                 .then(function (user) {
                     if(user.data != null){
                         var compositions = user.data.composed;
-                        console.log(compositions);
                         var sheets=[];
                         for(i=0; i<compositions.length; i++){
                             NoteService
                                 .findUserScore(compositions[i])
                                 .then(function (response) {
                                     vm.apiNotes.push(response.data);
-                                    console.log(vm.apiNotes);
                                 });
                         }
                     }else {

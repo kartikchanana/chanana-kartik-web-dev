@@ -13,7 +13,7 @@ module.exports = function (mongoose) {
         },
         comments: [{
             date: {type: Date, default: Date.now },
-            userId: String, //Check if Number required, it's for local user now
+            username: String, //Check if Number required, it's for local user now
             comment: String
         }],
         secret: String,

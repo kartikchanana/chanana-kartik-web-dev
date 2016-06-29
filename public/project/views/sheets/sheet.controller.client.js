@@ -12,6 +12,7 @@
         vm.searchText = $routeParams.searchText;
         vm.pageNo = $routeParams.pageNo;
         vm.searchNotes = searchNotes;
+        vm.getNiceDate = getNiceDate;
         vm.followUser = followUser;
         vm.unfollowUser = unfollowUser;
         vm.likeSheet = likeSheet;
@@ -55,8 +56,9 @@
             if($rootScope.currentUser == null){
                 vm.returnData = "Log in to continue";
             }else{
+                document.getElementById("commentArea").focus();
                 NoteService
-                    .Comment(comment,vm.noteId, $rootScope.currentUser._id)
+                    .Comment(comment,vm.noteId, $rootScope.currentUser.username)
                     .then(function (response) {
                         console.log("Successful");
                         init();
@@ -81,6 +83,9 @@
                 )
         }
 
+        function getNiceDate(date) {
+            
+        }
         function likeSheet() {
             if($rootScope.currentUser == null){
                 vm.returnData = "Log in to continue";
@@ -99,8 +104,6 @@
                                 });
                         }else{
                             var likers = response.data.liker;
-                            console.log("response is: ");
-                            console.log(response.data.liker);
                             for(i=0; i<likers.length ; i++){
                                 if(likers[i] == $rootScope.currentUser._id){
                                     vm.userLiked = 1;
@@ -110,7 +113,6 @@
                                     .likeSheet(vm.noteId)
                                     .then(function (response) {
                                         vm.userLiked = 1;
-                                        console.log("Successful return to controller");
                                     },function (error) {
                                         console.log(error);
                                     });
@@ -125,24 +127,22 @@
             if($rootScope.currentUser == null){
                 vm.returnData = "Log in to continue";
             }else{
-                console.log(vm.note.user);
                 NoteService
                     .checkIfUserFollowed(vm.note.user.uid, $rootScope.currentUser._id)
                     .then(function (response) {
+                        console.log(response);
                         var followed = response.data;
-                        if(response.data == null){
-                            console.log("empty");
+                        if(response.data == null || response.data == ""){
                             NoteService
                                 .followUser(vm.note.user.uid)
                                 .then(function (response) {
                                     console.log("Successful");
                                     vm.userFollowed = 1;
                                 });
-                            console.log("followed" + vm.note.user.username);}
+                        }
                         else{
                             for(i=0 ; i<followed.length ; i++){
                                 if(followed[i] == vm.note.user.uid){
-                                    console.log("he has already followed him");
                                     vm.userFollowed = 1;
                                 }
                             }if(vm.userFollowed = 0){
@@ -151,7 +151,6 @@
                                     .then(function (response) {
                                         console.log("Successful");
                                     });
-                                console.log("followed" + vm.note.user.username);
                             }
                         }
                     });
@@ -165,7 +164,6 @@
                 .unfollowUser(vm.note.user.uid, $rootScope.currentUser._id)
                 .then(function (response) {
                     vm.userFollowed = 0;
-                    console.log("unfollowed" + vm.userFollowed);
                     console.log(response);
                 });}
         }
@@ -173,11 +171,17 @@
             if($rootScope.currentUser == null){
                 vm.returnData = "Log in to continue";
             }else{
-                NoteService
-                    .unlikeSheet(vm.noteId,$rootScope.currentUser._id)
+                UserService
+                    .unlikeSheetUser(vm.noteId,$rootScope.currentUser._id)
                     .then(function (response) {
+                        NoteService
+                            .unlikeSheet(vm.noteId,$rootScope.currentUser._id)
+                            .then(function (response) {
+                                console.log(response);
+                            });
+                        console.log(response);
                         vm.userLiked = 0;
-                    })
+                    });
             }
         }
         function searchNotes(searchText, page) {

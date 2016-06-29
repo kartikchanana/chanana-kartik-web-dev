@@ -24,8 +24,8 @@
                 <li ng-show="model.flag == 0">
                     <a href="#/register">Register</a>
                 </li>
-                <li>
-                    <a href="#/contact">Contact us</a>
+                <li ng-show="model.flag == 1">
+                    <a href="#/profile">Profile</a>
                 </li>
             </ul>
         </div>
@@ -49,7 +49,7 @@
 
                 <!-- Author -->
                 <p class="lead">
-                    by {{model.note.user.username}}
+                    by <a href="#/checkProfile/{{model.note.user.username}}/{{model.note.user.uid}}"> {{model.note.user.username}}</a>
                 </p>
 
                 <hr>
@@ -58,7 +58,13 @@
                 <!--<hr>-->
 
                 <!--&lt;!&ndash; Preview Image &ndash;&gt;<img src="https://s3.amazonaws.com/static.musescore.com/329716/4495876ba1/score_0.png" style="width: 100%; height: 100%;">-->
-                <img class="img-responsive" ng-src="{{model.note.url}}" alt="">
+                <div ng-show="model.note.id">
+                    <img class="img-responsive" ng-src="http://static.musescore.com/{{model.note.id}}/{{model.note.secret}}/score_0.png" alt="">
+                </div>
+                <div ng-show="model.note._id">
+                    <img class="img-responsive" ng-src="{{model.note.url}}" alt="">
+                </div>
+
 
 
                 <hr>

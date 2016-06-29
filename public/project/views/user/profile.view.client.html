@@ -17,9 +17,6 @@
                 <li>
                     <a href="" ng-click="model.logout()">Sign Out</a>
                 </li>
-                <li>
-                    <a href="#/profile">Profile</a>
-                </li>
             </ul>
         </div>
         <!-- /.navbar-collapse -->
@@ -116,7 +113,7 @@
                     <div ng-repeat="note in model.apiNotes">
                         <div class="col-md-2 thumb-img">
                             <a ng-show="note.apiId == 0"
-                               href="#/results/sheet/{{note._id}}"
+                               href="#/results/ownsheet/{{note._id}}"
                                ng-click="model.setUrl()">
                                 <img class="img-responsive thumb-img" ng-src={{note.url}} style="max-height: 70px;max-width: 100px;" alt="">
                             </a>
@@ -129,7 +126,7 @@
                         <div class="col-md-10">
                             <h3><a ng-show="note.apiId == 0"
                                    ng-click="model.setUrl()"
-                                   href="#/results/sheet/{{note._id}}">{{note.title}}</a></h3>
+                                   href="#/results/ownsheet/{{note._id}}">{{note.title}}</a></h3>
                             <h3><a ng-show="note.apiId != 0"
                                    ng-click="model.setUrl()"
                                    href="#/results/{{model.searchText}}/{{model.pageNo}}/sheet/{{note.id}}/{{note.secret}}/0">{{note.title}}</a></h3>
@@ -141,15 +138,15 @@
 
 
             <div class="col-lg-8 col-md-8 col-sm-8" ng-show="model.likedflag ==1">
-                <div ng-repeat="note in model.apiNotes">
-                    <div class="col-md-2 img-thumb">
+                <div ng-repeat="note in model.likedNotes">
+                    <div class="col-md-2 thumb-img img-thumb">
                         <a ng-show="note.apiId == 0"
-                           href="#/results/sheet/{{note._id}}"
+                           href="#/results/ownsheet/{{note._id}}"
                            ng-click="model.setUrl()">
                             <img class="img-responsive" ng-src={{note.url}} alt="">
                         </a>
                         <a ng-show="note.apiId != 0"
-                           href="#/results/{{model.searchText}}/{{model.pageNo}}/sheet/{{note.id}}/{{note.secret}}/0"
+                           href="#/results/ownsheet/{{note.id}}"
                            ng-click="model.setUrl()">
                             <img class="img-responsive" ng-src="http://static.musescore.com/{{note.id}}/{{note.secret}}/thumb.png" alt="">
                         </a>
@@ -157,10 +154,10 @@
                     <div class="col-md-10">
                         <h3><a ng-show="note.apiId == 0"
                                ng-click="model.setUrl()"
-                               href="#/results/sheet/{{note._id}}">{{note.title}}</a></h3>
+                               href="#/results/ownsheet/{{note._id}}">{{note.title}}</a></h3>
                         <h3><a ng-show="note.apiId != 0"
                                ng-click="model.setUrl()"
-                               href="#/results/{{model.searchText}}/{{model.pageNo}}/sheet/{{note.id}}/{{note.secret}}/0">{{note.title}}</a></h3>
+                               href="#/results/ownsheet/{{note.id}}">{{note.title}}</a></h3>
                         <h4 style="color: #2e6da4">by {{note.user.username}}</h4>
                         <p>{{note.metadata.pages}} pages | {{note.metadata.parts.length}} parts| {{note.view_count}} views| {{note.download_count}} downloads</p>
                     </div>

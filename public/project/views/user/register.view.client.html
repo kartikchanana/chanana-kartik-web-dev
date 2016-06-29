@@ -32,7 +32,7 @@
 </nav>
 
 
-<div class="container push-down">
+<div class="container push-down-further">
 
     <div ng-if="model.error" class="alert alert-danger">
         {{model.error}}
@@ -46,21 +46,18 @@
                class="form-control"
                placeholder="username"
                required/>
-        <span ng-show="model.nameError">Please provide valid username</span>
         <input ng-model="password"
                type="password"
                id="password"
                class="form-control"
                placeholder="password"
                required/>
-        <span ng-show="model.pwdError">Please provide valid password</span>
         <input ng-model="verifyPassword"
                type="password"
                id="verifyPassword"
                class="form-control"
-               placeholder="very password"
+               placeholder="verify password"
                required/>
-        <span ng-show="model.vpwdError">Please provide valid verify password</span>
         <a class="btn btn-primary btn-block"
            ng-click="model.createUser(username,password,verifyPassword)">Register</a>
         <a class="btn btn-danger  btn-block"

@@ -69,7 +69,7 @@
                         <h3><a ng-show="note.apiId != 0"
                                ng-click="model.setUrl()"
                                href="#/results/{{model.searchText}}/{{model.pageNo}}/sheet/{{note.id}}/{{note.secret}}/0">{{note.title}}</a></h3>
-                        <h4 style="color: #2e6da4">by {{note.user.username}}</h4>
+                        <h4 style="color: #2e6da4">by <a href="#/checkProfile/{{note.user.username}}/{{note.user.uid}}/">{{note.user.username}}</h4></a>
                         <p>{{note.metadata.pages}} pages | {{note.metadata.parts.length}} parts| {{note.view_count}} views| {{note.download_count}} downloads</p>
                     </div>
                 </div>

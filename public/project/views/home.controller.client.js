@@ -21,8 +21,8 @@
 
         $( "#searchBox" ).keypress(function(event) {
             if(event.which == 13 || event.keyCode == 13) {
-                var tb = document.getElementById("searchBox").innerHTML;
-                console.log(tb);
+                var tb = document.getElementById("searchBox").value;
+                $location.url("/results/"+ tb + "/" + 0);
             }
             return true;
         });

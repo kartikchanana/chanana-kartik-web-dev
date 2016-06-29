@@ -27,8 +27,6 @@
                 <li ng-show="model.flag == 0">
                     <a href="#/register">Register</a>
                 </li>
-                <li>
-                    <a href="#/contact">Contact us</a>
                 </li>
             </ul>
         </div>
@@ -57,7 +55,7 @@
                                class="form-control"
                                placeholder="Find sheet music...">
                         <span class="input-group-btn">
-                            <button ng-click="model.searchNotes(searchText, 1)" class="btn btn-default search-btn">
+                            <button ng-click="model.searchNotes(searchText, 0)" class="btn btn-default search-btn">
                                 <i class="glyphicon glyphicon-search"></i></button>
                         </span>
                     </span>
@@ -66,7 +64,7 @@
                     </div>
                     <div class="last form-control" ng-show="model.flag == 1">
                         <span class="lastSpan">
-                            <a href="#/sheet/new" class="btn btn-trans" type="button" style="text-transform: none; color:white;">Create your own</a>
+                            <a href="#/sheet/new" style="text-transform: none; color:white;">Create your own</a>
                         </span>
                     </div>
                 </div>

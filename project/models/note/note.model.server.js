@@ -24,10 +24,20 @@ module.exports = function() {
         getAllScores: getAllScores,
         updateScore: updateScore,
         deleteScore: deleteScore,
-        loadOwnComments: loadOwnComments
+        loadOwnComments: loadOwnComments,
+        getOwnScores: getOwnScores
     };
     return api;
 
+    function getOwnScores(userId,username) {
+        return Note.find({
+            $and: [
+                {apiId: 0},
+                {user:{uid:userId, username: username}}
+            ]
+        });
+    }
+    
     function deleteScore(scoreId) {
         return Note.remove({_id: scoreId});
     }
@@ -43,7 +53,6 @@ module.exports = function() {
         return Note.find({apiId: 0});
     }
     function unlikeApiSheet(noteId, userId) {
-        console.log("reached note model to unlike");
         return Note.update({apiId: noteId},
             {$pull: {liker: userId}});
     }
@@ -60,7 +69,6 @@ module.exports = function() {
         });
     }
     function checkApiLike(noteId, userId) {
-        console.log("comes to model to check like");
         return Note.findOne({
             $and: [
                 {apiId: noteId},
@@ -118,24 +126,24 @@ module.exports = function() {
         });
     }
 
-    function pushComment(comment, noteId, userId) {
+    function pushComment(comment, noteId, username) {
         return Note
             .update({apiId: noteId} , {
                 $push: {
                     comments: {
-                        userId: userId,
+                        username: username,
                         comment: comment
                     }
                 }
             });
     }
 
-    function addApiComment(comment, noteId, userId) {
+    function addApiComment(comment, noteId, username) {
         return Note
             .create({
                 apiId: noteId,
                 comments: {
-                    userId: userId,
+                    username: username,
                     comment: comment
                 }
             })
@@ -147,7 +155,6 @@ module.exports = function() {
     }
     
     function createScore(score) {
-        console.log(score);
         return Note.create(score);
     }
 

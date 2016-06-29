@@ -8,14 +8,20 @@
         vm.createUser = createUser;
 
         function createUser(username, password, verifyPassword) {
-            console.log("hey there");
-            if(vm.registerForm.username == ""){
+            if(!username){
                 vm.nameError = "Username required";
-            }else if(vm.registerForm.password == "") {
+                vm.error = "Username required";
+            }else if(!password) {
                 vm.pwdError= "Password required";
-            }else if(vm.registerForm.verifyPassword == "") {
+                vm.error= "Password required";
+            }else if(!verifyPassword) {
                 vm.vpwdError = "Verify password required";
-            }else{
+                vm.error = "Verify password required";
+            }else if(verifyPassword != password){
+                vm.allError = "Password and verify password don't match";
+                vm.error = "Password and verify password don't match";
+            }
+            else{
                 UserService
                     .register(username, password, verifyPassword)
                     .then(function (response){

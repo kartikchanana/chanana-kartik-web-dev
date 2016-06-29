@@ -7,7 +7,7 @@ module.exports = function (app, models) {
 
     app.get("/api/allScores", getAllScores);
     app.put("/api/unlike/:noteId/:userId", unlikeSheet);
-    app.put("/api/comment/:noteId/:comment/:userId", Comment);
+    app.put("/api/comment/:noteId/:comment/:username", Comment);
     app.post("/api/upload", upload.single('myFile'), uploadImage);
     app.get("/api/search/:searchText", findOwnNotes); 
     app.get("/api/search/:scoreId", findOwnNote);
@@ -17,7 +17,17 @@ module.exports = function (app, models) {
     app.get("/api/renderScore/:scoreId", findUserScore);
     app.put("/api/updateScore/:scoreId", updateScore);
     app.delete("/api/score/:scoreId" , deleteScore);
+    app.get("/api/ownUserScore/:username/:userId", getOwnScores);
 
+    function getOwnScores(req,res) {
+        var userId = req.params.userId;
+        var username = req.params.username;
+        noteModel
+            .getOwnScores(userId,username)
+            .then(function (response) {
+                res.send(response);
+            });
+    }
     function deleteScore(req,res) {
         var scoreId = req.params.scoreId;
         noteModel
@@ -30,8 +40,6 @@ module.exports = function (app, models) {
     function updateScore(req, res) {
         var scoreId = req.params.scoreId;
         var score = req.body;
-        console.log(scoreId);
-        console.log(score);
         noteModel
             .updateScore(scoreId, score)
             .then(function (stats) {
@@ -53,16 +61,12 @@ module.exports = function (app, models) {
             noteModel
                 .findApiNoteComment(scoreId)
                 .then(function (score) {
-                    console.log("render score");
-                    console.log(score);
                     res.json(score);
                 });
         }else{
             noteModel
                 .findOwnNote(scoreId)
                 .then(function (score) {
-                    console.log("render score");
-                    console.log(score);
                     res.json(score);
                 });
         }
@@ -73,15 +77,12 @@ module.exports = function (app, models) {
         var noteId = req.params.noteId;
         var userId = req.params.userId;
         if(noteId.length <10){
-            console.log("api like check");
             noteModel
                 .checkApiLike(noteId, userId)
                 .then(function (score) {
-                    console.log(score);
                     res.json(score);
                 });
         }else{
-            console.log("own like check");
             noteModel
                 .checkOwnLike(noteId, userId)
                 .then(function (score) {
@@ -92,20 +93,11 @@ module.exports = function (app, models) {
     function unlikeSheet(req,res) {
         var noteId = req.params.noteId;
         var userId = req.params.userId;
-        console.log(noteId);
-        console.log(userId);
         if(noteId.length<10){
             noteModel
                 .unlikeApiSheet(noteId, userId)
                 .then(function (stats) {
                     console.log(stats);
-                    // userModel
-                    //     .unlikeSheet(noteId, userId)
-                    //     .then(function (response) {
-                    //         console.log("|||||");
-                    //         console.log(response);
-                    //         res.send(200);
-                    //     });
                 }, function(error) {
                     res.statusCode(404).send(error);
                 });
@@ -129,7 +121,6 @@ module.exports = function (app, models) {
                 .findApiNoteComment(noteId)
                 .then(function (response) {
                     if (response == null) {
-                        console.log("not found api score");//if not exist, create
                         noteModel
                             .addLike(noteId, userId)
                             .then(function (response) {
@@ -139,8 +130,7 @@ module.exports = function (app, models) {
                                         res.send(200);
                                     });
                             });
-                    } else {                            //if found
-                        console.log("found api score");
+                    } else {  
                         noteModel
                             .pushApiLike(noteId, userId)
                             .then(function (response) {
@@ -167,7 +157,6 @@ module.exports = function (app, models) {
 
     function findOwnNote(req, res) {
         var scoreId = req.params.scoreId;
-        console.log("comes to find score on server service");
         noteModel
             .findOwnNote(scoreId)
             .then(function (score) {
@@ -183,7 +172,6 @@ module.exports = function (app, models) {
                     res.json(score);
                 }, function (error) {
                     res.statusCode(404).send(error);
-                    console.log("Comments bug");
                 });
         }else{
             noteModel
@@ -192,7 +180,6 @@ module.exports = function (app, models) {
                     res.json(score);
                 }, function (error) {
                     res.statusCode(404).send(error);
-                    console.log("Comments bug");
                 });
         }
 
@@ -201,16 +188,15 @@ module.exports = function (app, models) {
     function Comment(req,res) {
         var comment = req.params.comment;
         var noteId = req.params.noteId;
-        var userId = req.params.userId;
+        var username = req.params.username;
         if(noteId.length <10){
             noteModel
                 .findApiNoteComment(noteId)
                 .then(
                     function (response) {
                         if(response == null){
-                            console.log(" nothing found api score comments");
                             noteModel
-                                .addApiComment(comment, noteId, userId)
+                                .addApiComment(comment, noteId, username)
                                 .then(
                                     function (stats) {
                                         res.send(200);
@@ -219,9 +205,8 @@ module.exports = function (app, models) {
                                         res.statusCode(404).send(error);
                                     });
                         }else{
-                            console.log("found api score comments");
                             noteModel
-                                .pushComment(comment, noteId, userId)
+                                .pushComment(comment, noteId, username)
                                 .then(function (response) {
                                         res.json(200);
                                     },
@@ -273,7 +258,6 @@ module.exports = function (app, models) {
 
         if(myFile == null)
         {
-            console.log("not created");
             res.redirect("/project/#/");
             return;
         }
@@ -316,7 +300,6 @@ module.exports = function (app, models) {
                             userModel
                                 .addComposition(userId, scoreId)
                                 .then(function (response) {
-                                    console.log("comes to adding into user");
                                     console.log(stats);
                                     res.send(200);
                                 });

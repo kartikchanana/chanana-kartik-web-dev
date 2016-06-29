@@ -24,11 +24,11 @@
             findLiked: findLiked,
             viewFollowed: viewFollowed,
             getAllUsers: getAllUsers,
-            unlikeSheet: unlikeSheet
+            unlikeSheetUser: unlikeSheetUser
         };
         return api;
 
-        function unlikeSheet(noteId, userId) {
+        function unlikeSheetUser(noteId, userId) {
             return $http.put("/api/unlikeit/" +noteId + "/" + userId);
         }
         function getAllUsers() {

@@ -16,7 +16,7 @@
         vm.searchNextPage = searchNextPage;
         vm.pageNo = $routeParams.pageNo;
         vm.numberOfInst = $routeParams.number;
-        vm.pages=[1,2,3,4,5];
+        vm.pages=[];
 
         function init() {
             if($rootScope.currentUser == null){
@@ -24,27 +24,36 @@
             }else{
                 vm.flag = 1;
             }
+            var ps = Math.floor(vm.pageNo/5);
+            var start = 5 * ps;
+            vm.pages =[start+1,start+2,start+3,start+4,start+5];
             NoteService
                 .findNotes(vm.searchText, vm.pageNo)
                 .then(
                     function (response) {
                         vm.apiNotes = response.data;
-                        NoteService
-                            .findOwnNotes(vm.searchText)
-                            .then(
-                                function (response) {
-                                    vm.apiNotes = vm.apiNotes.concat(response.data);
-                                    console.log(vm.apiNotes);
-                                    for (i = 0; i < vm.apiNotes.length; i++) {
+                        if(vm.pageNo >= 1){
+                            for (i = 0; i < vm.apiNotes.length; i++) {
+                                var part = vm.apiNotes[i].metadata.parts; //array of instruments
+                                var len = part.length;
+                                if (vm.count.indexOf(len) == -1) {
+                                    vm.count.push(len);
+                                }}
+                        }else if(vm.pageNo == 0){
+                            NoteService
+                                .findOwnNotes(vm.searchText)
+                                .then(
+                                    function (response) {
+                                        vm.apiNotes = vm.apiNotes.concat(response.data);
+                                        for (i = 0; i < vm.apiNotes.length; i++) {
                                             var part = vm.apiNotes[i].metadata.parts; //array of instruments
-                                    var len = part.length;
-                                    if (vm.count.indexOf(len) == -1) {
-                                        vm.count.push(len);
+                                            var len = part.length;
+                                            if (vm.count.indexOf(len) == -1) {
+                                                vm.count.push(len);
+                                            }}
                                     }
-
-                                }
-                                }
-                            );
+                                );
+                        }
                     }
                 );
         }
@@ -87,7 +96,6 @@
                 for(i=1;i<6;i++){
                     newPages.push(largest + i);
                 }
-                console.log(newPages);
                 vm.pages = newPages;
                 searchNextPage(largest + 1);
             }
@@ -105,7 +113,6 @@
                 for(i=5;i>0;i--){
                     newPages.push(smallest - i);
                 }
-                console.log(newPages);
                 vm.pages = newPages;
                 searchNextPage(smallest - 5);
             }

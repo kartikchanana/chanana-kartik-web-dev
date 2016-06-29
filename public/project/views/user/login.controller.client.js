@@ -24,7 +24,7 @@
                     .login(username, password)
                     .then(function(response){
                         var user = response.data;
-                        console.log("response:" +user);
+                        console.log(response);
                         if(user._id) {
                             if($rootScope.previousUrl){
                                 $location.url($rootScope.previousUrl);
@@ -35,6 +35,9 @@
                             vm.error = response.error;
                             $location.url("/");
                         }
+                    }, function (error) {
+                        vm.error=error.data;
+                        $location.url("/login");
                     });
             }
         }

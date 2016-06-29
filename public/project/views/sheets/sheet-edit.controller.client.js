@@ -24,7 +24,6 @@
                 .then(
                     function (response) {
                         vm.note = response.data;
-                        console.log(response.data);
                         vm.ipartsData = vm.note.metadata.parts;
                         NoteService
                             .loadComments(vm.noteId)
@@ -32,7 +31,6 @@
                                 var noteData = response.data;
                                 if(noteData != null){
                                     vm.comments = noteData.comments;
-                                    console.log(vm.comments);
                                 }
                             },
                             function (error) {
@@ -97,14 +95,11 @@
                                 .likeSheet(vm.noteId)
                                 .then(function (response) {
                                     vm.userLiked = 1;
-                                    console.log("Successful return to controller");
                                 },function (error) {
                                     console.log(error);
                                 });
                         }else{
                             var likers = response.data.liker;
-                            console.log("response is: ");
-                            console.log(response.data.liker);
                             for(i=0; i<likers.length ; i++){
                                 if(likers[i] == $rootScope.currentUser._id){
                                     vm.userLiked = 1;
@@ -114,7 +109,6 @@
                                     .likeSheet(vm.noteId)
                                     .then(function (response) {
                                         vm.userLiked = 1;
-                                        console.log("Successful return to controller");
                                     },function (error) {
                                         console.log(error);
                                     });
@@ -134,7 +128,6 @@
                     .then(function (response) {
                         var followed = response.data;
                         if(response.data == null){
-                            console.log("empty");
                             NoteService
                                 .followUser(vm.note.user.uid)
                                 .then(function (response) {
@@ -145,7 +138,6 @@
                         else{
                             for(i=0 ; i<followed.length ; i++){
                                 if(followed[i] == vm.note.user.uid){
-                                    console.log("he has already followed him");
                                     vm.userFollowed = 1;
                                 }
                             }if(vm.userFollowed = 0){
@@ -154,7 +146,6 @@
                                     .then(function (response) {
                                         console.log("Successful");
                                     });
-                                console.log("followed" + vm.note.user.username);
                             }
                         }
                     });
@@ -168,7 +159,6 @@
                 .unfollowUser(vm.note.user.uid, $rootScope.currentUser._id)
                 .then(function (response) {
                     vm.userFollowed = 0;
-                    console.log("unfollowed" + vm.userFollowed);
                     console.log(response);
                 });}
         }

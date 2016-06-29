@@ -112,12 +112,9 @@ module.exports = function (app, models) {
     function unlikeSheet(req,res) {
         var noteId = req.params.noteId;
         var userId = req.params.userId;
-        console.log(noteId);
-        console.log(userId);
         userModel
             .unlikeSheet(noteId, userId)
             .then(function (response) {
-                console.log("|||||");
                 console.log(response);
                 res.send(200);
             }, function (error) {
@@ -247,21 +244,13 @@ module.exports = function (app, models) {
     function checkFollow(req,res) {
         var composer = req.params.composer;
         var userId = req.params.userId;
-        console.log("composer is:" + composer);
-        console.log("user is:" + userId);
         userModel
             .checkFollow(composer, userId)
             .then(
-                function (user) {
-                    res.send(user);
-                    console.log("checked if following or not");
-                    console.log(user);
-                }, function (error) {
-                    console.log("warning error");
-                    console.log(error);
-                    res.statusCode(404).send(error);
-                }
-            );
+                function (response) {
+                    res.send(response);
+                    console.log(response);
+                });
     }
     
     function followUser(req,res) {
@@ -283,8 +272,6 @@ module.exports = function (app, models) {
     function unfollowUser(req, res) {
         var unfollowId = req.params.unfollowId;
         var userId = req.params.userId;
-        console.log(unfollowId);
-        console.log(userId);
         userModel
             .unfollowUser(unfollowId, userId)
             .then(function (stats) {

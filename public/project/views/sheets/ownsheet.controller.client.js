@@ -27,25 +27,44 @@
             }else{
                 vm.flag = 1;
             }
-            console.log("followed status: " + vm.userFollowed);
-            console.log("liked status: " + vm.userLiked);
-            NoteService
-                .findUserScore(vm.noteId)
-                .then(
-                    function (response) {
-                        vm.note = response.data;
-                        vm.ipartsData = vm.note.metadata.parts;
+            if(vm.noteId.length<10){
+                NoteService
+                    .findNote(vm.noteId)
+                    .then(function (response) {
+                        vm.note=response.data;
+                        var parts = vm.note.metadata.parts;
+                        var partsData = [];
+                        for(i=0; i<parts.length; i++){
+                            partsData.push(parts[i].part.name);
+                        }
+                        vm.ipartsData=partsData.join();
                         NoteService
                             .loadComments(vm.noteId)
                             .then(function (response) {
                                 var noteData = response.data;
                                 if(noteData != null){
                                     vm.comments = noteData.comments;
-                                    console.log(vm.comments);
                                 }
                             });
-                    }
-                );
+                    })
+            }else{
+                NoteService
+                    .findUserScore(vm.noteId)
+                    .then(
+                        function (response) {
+                            vm.note = response.data;
+                            vm.ipartsData = vm.note.metadata.parts;
+                            NoteService
+                                .loadComments(vm.noteId)
+                                .then(function (response) {
+                                    var noteData = response.data;
+                                    if(noteData != null){
+                                        vm.comments = noteData.comments;
+                                    }
+                                });
+                        }
+                    );
+            }
         }
         init();
 
@@ -87,14 +106,11 @@
                                 .likeSheet(vm.noteId)
                                 .then(function (response) {
                                     vm.userLiked = 1;
-                                    console.log("Successful return to controller");
                                 },function (error) {
                                     console.log(error);
                                 });
                         }else{
                             var likers = response.data.liker;
-                            console.log("response is: ");
-                            console.log(response.data.liker);
                             for(i=0; i<likers.length ; i++){
                                 if(likers[i] == $rootScope.currentUser._id){
                                     vm.userLiked = 1;
@@ -104,7 +120,6 @@
                                     .likeSheet(vm.noteId)
                                     .then(function (response) {
                                         vm.userLiked = 1;
-                                        console.log("Successful return to controller");
                                     },function (error) {
                                         console.log(error);
                                     });
@@ -125,7 +140,6 @@
                         var followed = response.data;
                         console.log(response.data);
                         if(response.data == null || response.data == ""){
-                            console.log("empty");
                             NoteService
                                 .followUser(vm.note.user.uid)
                                 .then(function (response) {
@@ -145,7 +159,6 @@
                                     .then(function (response) {
                                         console.log("Successful");
                                     });
-                                console.log("followed" + vm.note.user.username);
                             }
                         }
                     }, function (error) {
@@ -161,7 +174,6 @@
                     .unfollowUser(vm.note.user.uid, $rootScope.currentUser._id)
                     .then(function (response) {
                         vm.userFollowed = 0;
-                        console.log("unfollowed" + vm.userFollowed);
                         console.log(response);
                     });}
         }
@@ -169,11 +181,17 @@
             if($rootScope.currentUser == null){
                 vm.returnData = "Log in to continue";
             }else{
-                NoteService
-                    .unlikeSheet(vm.noteId,$rootScope.currentUser._id)
+                UserService
+                    .unlikeSheetUser(vm.noteId,$rootScope.currentUser._id)
                     .then(function (response) {
+                        NoteService
+                            .unlikeSheet(vm.noteId,$rootScope.currentUser._id)
+                            .then(function (response) {
+                                console.log(response);
+                            });
+                        console.log(response);
                         vm.userLiked = 0;
-                    })
+                    });
             }
         }
         function searchNotes(searchText, page) {

@@ -34,9 +34,6 @@ module.exports = function () {
 
     function reorderWidgets(start,stop,pageId)
     {
-        console.log("at model" +start);
-        console.log("at model " +stop);
-        console.log("at model" +pageId);
         return Widget.find(function(err,widgets)
         {
             widgets.forEach(function(widget)

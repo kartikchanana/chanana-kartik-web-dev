@@ -23,18 +23,21 @@
             findUserScore: findUserScore,
             getAllScores: getAllScores,
             updateNote: updateNote,
-            deleteNote: deleteNote
+            deleteNote: deleteNote,
+            findUser: findUser,
+            findOwnUserScores: findOwnUserScores
             // unfollowOwnUser:unfollowOwnUser
         };
         return api;
 
+        function findOwnUserScores(userId,username) {
+            return $http.get("/api/ownUserScore/" +username + "/" + userId);
+        }
         function deleteNote(noteId) {
             return $http.delete("/api/score/" +noteId);
         }
         
         function updateNote(noteId, note) {
-            console.log(noteId);
-            console.log(note);
             var url="/api/updateScore/"+ noteId;
             return $http.put(url ,note);
         }
@@ -48,9 +51,6 @@
             return $http.get("/api/checkLike/" +noteId + "/" + userId);
         }
         function unfollowUser(unfollowId, userId) {
-            console.log("At service client");
-            console.log(unfollowId);
-            console.log(userId);
             return $http.put("/api/unfollow/" + unfollowId + "/" + userId);
         }
         function unlikeSheet(noteId, userId) {
@@ -63,8 +63,8 @@
             return $http.get("/api/comments/" +scoreId);
         }
 
-        function Comment(comment, noteId, userId) {
-            return $http.put("/api/comment/" +noteId + "/" + comment + "/" + userId);
+        function Comment(comment, noteId, username) {
+            return $http.put("/api/comment/" +noteId + "/" + comment + "/" + username);
         }
         function likeSheet(noteId) {
             return $http.put("/api/like/" +noteId);
@@ -72,6 +72,7 @@
         function followUser(userId) {
             return $http.put("/api/follow/" +userId);
         }
+
         function findOwnNotes(searchText) {
             return $http.get("/api/search/" +searchText);
         }
@@ -79,15 +80,13 @@
             var url = base + "/score.jsonp&oauth_consumer_key=" + cons_key + "&text=" + searchText + "&page=" + pageNo + "?callback=JSON_CALLBACK";
             return $http.jsonp(url);
         }
+        function findUser(userId) {
+            var url = base + "/user/" + userId + "/score.jsonp"  + "?callback=JSON_CALLBACK&oauth_consumer_key=" + cons_key;
+            return $http.jsonp(url);
+        }
         function findNote(scoreId) {
-            if(scoreId.length < 10){
                 var url = base + "/score/" + scoreId + ".jsonp"  + "?callback=JSON_CALLBACK&oauth_consumer_key=" + cons_key;
-                console.log(url);
                 return $http.jsonp(url);
-            }else{
-                console.log("own note" + scoreId);
-                return $http.get("/api/search/" + scoreId);
-            }
 
         }
 
