@@ -200,7 +200,7 @@
                 <div ng-repeat="user in model.allUsers">
                     <div class="col-md-6 img-thumb">
                         <h2>
-                            <a href="">{{user.username}}</a>
+                            <a href="#checkProfile/{{user.username}}/{{user._id}}">{{user.username}}</a>
                         </h2>
                         <button class="btn btn-danger" ng-click="model.getUser(user._id)">Edit</button>
                     </div>

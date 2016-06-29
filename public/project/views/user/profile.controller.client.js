@@ -39,7 +39,7 @@
                         vm.sheetsflag = 0;
                         vm.followedflag = 0;
                         vm.editingUserflag = 0;
-                        vm.profileflag = 0;
+                        vm.profileflag = 1;
                         vm.allusersflag =0;
                         vm.allscores = 0;
                     }
