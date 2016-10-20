@@ -8,6 +8,7 @@
 
         vm.login = login;
         
+        //Validate login details and then authenticate
         function login (username, password) {
             if(!password && !username){
                 vm.allError= "Enter all details";

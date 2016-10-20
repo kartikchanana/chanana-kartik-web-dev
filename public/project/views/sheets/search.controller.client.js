@@ -6,18 +6,23 @@
     function SearchController($location,$routeParams, NoteService, UserService, $rootScope) {
         var vm = this;
         vm.count =[];
+        
+        //Function requests from view
         vm.searchNotes = searchNotes;
         vm.decreasePages = decreasePages;
         vm.increasePages = increasePages;
         vm.searchByNumber = searchByNumber;
         vm.logout = logout;
         vm.setUrl = setUrl;
-        vm.searchText = $routeParams.searchText;
         vm.searchNextPage = searchNextPage;
+        //Data coming from URL
+        vm.searchText = $routeParams.searchText;
         vm.pageNo = $routeParams.pageNo;
         vm.numberOfInst = $routeParams.number;
         vm.pages=[];
 
+        //check if user logged in on-load and then 
+        // load notes matching searched keyword
         function init() {
             if($rootScope.currentUser == null){
                 vm.flag = 0;
@@ -59,6 +64,7 @@
         }
         init();
 
+        //Logout the current user
         function logout() {
             UserService
                 .logout()
@@ -74,20 +80,28 @@
                 )
         }
 
+        //Internal rerouting
         function setUrl() {
             var prevUrl = "/results/"+ vm.searchText + "/" + vm.pageNo;
             $rootScope.prevUrl = prevUrl;
         }
+        
+        //Load scores filtered by number of instruments
         function searchByNumber(number, page) {
             $location.url("/results/"+vm.searchText+ "/" +number +"/" +page);
         }
+        
+        //Search scores by page number
         function searchNotes(searchText, page) {
             $location.url("/results/"+searchText+ "/" +page);
         }
+        
+        //Load next page
         function searchNextPage(page) {
             $location.url("/results/"+vm.searchText+ "/" +page);
         }
 
+        //For paginating next
         function increasePages() {
             var earlierPages = vm.pages;
             var largest = Math.max.apply(Math, earlierPages);
@@ -102,6 +116,7 @@
 
         }
 
+        //For paginating previous
         function decreasePages() {
             var earlierPages = vm.pages;
             var smallest = Math.min.apply(Math, earlierPages);

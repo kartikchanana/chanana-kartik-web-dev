@@ -10,6 +10,8 @@
         vm.logout = logout;
         vm.flag = 0;
         var id = $rootScope.currentUser._id;
+
+        //To load page as per following flags
         vm.viewSheets = viewSheets;
         vm.viewLiked = viewLiked;
         vm.setProfileFlag = setProfileFlag; 
@@ -29,6 +31,7 @@
         vm.getUser = getUser;
         vm.unlike = unlike;
 
+        //Different initialisation depending on flags
         function init() {
             UserService
                 .findUserById(id)
@@ -47,6 +50,7 @@
         }
         init();
 
+        //Find current loggedIn user details
         function getUser(userId) {
             UserService
                 .findUserById(userId)
@@ -61,6 +65,8 @@
                 });
 
         }
+
+        //All users details, only for admin
         function getAllUsers() {
             vm.profileflag = 0;
             vm.sheetsflag = 0;
@@ -79,6 +85,8 @@
                     }
                 });
         }
+
+        //All scores details to delete noisy uploads, only for admin
         function getAllScores() {
             vm.profileflag = 0;
             vm.sheetsflag = 0;
@@ -96,6 +104,8 @@
                     }
                 })
         }
+
+        //To show user profile
         function setProfileFlag() {
             vm.profileflag = 1;
             vm.sheetsflag = 0;
@@ -105,6 +115,8 @@
             vm.allscores = 0;
             vm.editingUserflag = 0;
         }
+        
+        //Remove user from followed composers
         function unfollowUser(user) {
             if($rootScope.currentUser == null){
                 vm.returnData = "Log in to continue";
@@ -127,6 +139,7 @@
             }
         }
 
+        //Remove score from liked scores
         function unlike(note) {
             if(note._id){
                 var noteId = note._id;
@@ -148,7 +161,7 @@
                 });
         }
         
-
+        //Log the current user out
         function logout() {
             UserService
                 .logout()
@@ -161,6 +174,8 @@
                     }
                 )
         }
+        
+        //To show followed composers for current user
         function viewFollowed() {
             vm.followedflag = 1;
             vm.likedflag = 0;
@@ -188,6 +203,8 @@
                     }
                 });
         }
+
+        //To show liked noted for current user
         function viewLiked() {
             vm.likedflag = 1;
             vm.profileflag = 0;
@@ -225,6 +242,8 @@
                     }
                 })
         }
+        
+        //Show all scores created locally
         function viewSheets() {
             vm.likedflag = 0;
             vm.profileflag = 0;
@@ -253,6 +272,8 @@
 
                 });
         }
+        
+        //Remove the current user from the database
         function unregister(){
             UserService
                 .deleteUser(id)
@@ -264,6 +285,8 @@
                     });
         }
         
+        
+        //Update current user details
         function updateUser(newUser) {
             UserService
                 .updateUser(id, newUser)

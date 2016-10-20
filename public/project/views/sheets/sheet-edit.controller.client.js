@@ -5,7 +5,6 @@
 
     function SheetEditController($location,$routeParams, NoteService, UserService, $rootScope) {
         var vm = this;
-        
 
         vm.noteId = $routeParams.noteId;
         vm.logout = logout;
@@ -13,6 +12,8 @@
         vm.deleteNote = deleteNote;
         vm.updateNote= updateNote;
 
+        //check if user logged in on-load and then
+        // load the sheet for editing
         function init() {
             if($rootScope.currentUser == null){
                 vm.flag = 0;
@@ -41,6 +42,7 @@
         }
         init();
 
+        //Remove the current score from database
         function deleteNote() {
             NoteService
                 .deleteNote(vm.noteId)
@@ -48,7 +50,8 @@
                     console.log(response);
                 });
         }
-        
+
+        //Update the current score
         function updateNote(note) {
             NoteService
                 .updateNote(vm.noteId, vm.note)
@@ -56,7 +59,8 @@
                     console.log(response);
                 });
         }
-        
+
+        //Delete the comment on a score, only for admin
         function deleteComment(comment) {
             if($rootScope.currentUser == null){
                 vm.returnData = "Log in to continue";
@@ -68,7 +72,8 @@
                     });
             }
         }
-        
+
+        //Logout the current user
         function logout() {
             UserService
                 .logout()
@@ -83,6 +88,8 @@
                     }
                 )
         }
+
+        //Add the score to liked list for Current user
         function likeSheet() {
             if($rootScope.currentUser == null){
                 vm.returnData = "Log in to continue";
@@ -118,7 +125,8 @@
                     });
             }
         }
-        
+
+        //Add the composer to followed list for Current user
         function followUser() {
             if($rootScope.currentUser == null){
                 vm.returnData = "Log in to continue";
@@ -151,6 +159,8 @@
                     });
             }
         }
+
+        //remove the composer from followed list for Current user
         function unfollowUser() {
                 if($rootScope.currentUser == null){
                     vm.returnData = "Log in to continue";
@@ -162,6 +172,8 @@
                     console.log(response);
                 });}
         }
+
+        //Remove the score from liked list for Current user
         function unlikeSheet() {
             if($rootScope.currentUser == null){
                 vm.returnData = "Log in to continue";
@@ -173,6 +185,8 @@
                     })
             }
         }
+
+        //Search nodes for keyword
         function searchNotes(searchText, page) {
             $location.url("/results/"+searchText+ "/" +page);
         }

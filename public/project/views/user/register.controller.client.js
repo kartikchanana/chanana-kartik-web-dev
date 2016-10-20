@@ -7,6 +7,7 @@
         var vm = this;
         vm.createUser = createUser;
 
+        //Register new user after validating users
         function createUser(username, password, verifyPassword) {
             if(!username){
                 vm.nameError = "Username required";

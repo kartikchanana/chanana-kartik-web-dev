@@ -6,11 +6,14 @@
     function OwnSheetController($location,$routeParams, NoteService, UserService, $rootScope) {
         var vm = this;
 
+        //Data coming from URL
         vm.sheetNo = $routeParams.sheetNo;
         vm.noteId = $routeParams.noteId;
         vm.noteSecret= $routeParams.noteSecret;
         vm.searchText = $routeParams.searchText;
         vm.pageNo = $routeParams.pageNo;
+        
+        //Function requests from view
         vm.searchNotes = searchNotes;
         vm.followUser = followUser;
         vm.unfollowUser = unfollowUser;
@@ -18,9 +21,11 @@
         vm.unlikeSheet = unlikeSheet;
         vm.logout = logout;
         vm.Comment = Comment;
+        
         vm.userFollowed = 0;
         vm.userLiked = 0;
 
+        //check if user logged in on-load and then load the score details
         function init() {
             if($rootScope.currentUser == null){
                 vm.flag = 0;
@@ -68,6 +73,7 @@
         }
         init();
 
+        //Add comment on the score
         function Comment(comment) {
             if($rootScope.currentUser == null){
                 vm.returnData = "Log in to continue";
@@ -80,6 +86,7 @@
             }
         }
 
+        //Logout the current user
         function logout() {
             UserService
                 .logout()
@@ -94,6 +101,8 @@
                     }
                 )
         }
+        
+        //Like the sheet for current user
         function likeSheet() {
             if($rootScope.currentUser == null){
                 vm.returnData = "Log in to continue";
@@ -130,6 +139,26 @@
             }
         }
 
+        //Unlike the sheet for current user
+        function unlikeSheet() {
+            if($rootScope.currentUser == null){
+                vm.returnData = "Log in to continue";
+            }else{
+                UserService
+                    .unlikeSheetUser(vm.noteId,$rootScope.currentUser._id)
+                    .then(function (response) {
+                        NoteService
+                            .unlikeSheet(vm.noteId,$rootScope.currentUser._id)
+                            .then(function (response) {
+                                console.log(response);
+                            });
+                        console.log(response);
+                        vm.userLiked = 0;
+                    });
+            }
+        }
+        
+        //Follow the composer for current user
         function followUser() {
             if($rootScope.currentUser == null){
                 vm.returnData = "Log in to continue";
@@ -166,6 +195,8 @@
                     });
             }
         }
+
+        //Unfollow the composer for current user
         function unfollowUser() {
             if($rootScope.currentUser == null){
                 vm.returnData = "Log in to continue";
@@ -177,27 +208,10 @@
                         console.log(response);
                     });}
         }
-        function unlikeSheet() {
-            if($rootScope.currentUser == null){
-                vm.returnData = "Log in to continue";
-            }else{
-                UserService
-                    .unlikeSheetUser(vm.noteId,$rootScope.currentUser._id)
-                    .then(function (response) {
-                        NoteService
-                            .unlikeSheet(vm.noteId,$rootScope.currentUser._id)
-                            .then(function (response) {
-                                console.log(response);
-                            });
-                        console.log(response);
-                        vm.userLiked = 0;
-                    });
-            }
-        }
+        
+        //Embedded search bar on page
         function searchNotes(searchText, page) {
             $location.url("/results/"+searchText+ "/" +page);
         }
     }
-})();/**
- * Created by Kartik on 6/27/2016.
- */
+})();

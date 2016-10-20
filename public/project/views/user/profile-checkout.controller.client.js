@@ -12,6 +12,7 @@
         vm.checkName = $routeParams.username;
         vm.apiNotes=[];
 
+        //Page load as per login status
         function init() {
             if($rootScope.currentUser == null){
                 vm.flag = 0;
@@ -38,7 +39,7 @@
         }
         init();
 
-        
+        //Logout the current user and redirect to home
         function logout() {
             UserService
                 .logout()
