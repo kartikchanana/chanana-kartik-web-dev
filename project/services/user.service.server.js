@@ -1,13 +1,19 @@
+//Passport packages for authentication
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+
+//To store passwords
 var bcrypt = require("bcrypt-nodejs");
+
+//#rd party authentication
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 module.exports = function (app, models) {
 
     var userModel = models.userModel;
     var noteModel = models.noteModel;
-    
+
+    //Incoming requests
     app.put("/api/unlikeit/:noteId/:userId", unlikeSheet);
     app.get("/api/allUsers", getAllUsers);
     app.get("/api/viewFollowed/:userId", viewFollowed);
@@ -32,6 +38,8 @@ module.exports = function (app, models) {
     //         successRedirect: '/project/#/',
     //         failureRedirect: '/project/#/login'
     //     }));
+
+    //Callback after authentication
     app.get('/auth/google/callback',
         passport.authenticate('google', {
             successRedirect: '/project/#/profile',
@@ -43,18 +51,14 @@ module.exports = function (app, models) {
 
     passport.deserializeUser(deserializeUser);
 
-    // var facebookConfig = {
-    //     clientID     : process.env.FACEBOOK_CLIENT_ID,
-    //     clientSecret : process.env.FACEBOOK_CLIENT_SECRET,
-    //     callbackURL  : process.env.FACEBOOK_CALLBACK_URL
-    // };
     var googleConfig = {
         clientID     : process.env.GOOGLE_CLIENT_ID,
         clientSecret : process.env.GOOGLE_CLIENT_SECRET,
         callbackURL  : process.env.GOOGLE_CALLBACK_URL
     };
-    // passport.use('facebook', new FacebookStrategy(facebookConfig, facebookLogin));
     passport.use(new GoogleStrategy(googleConfig, googleStrategy));
+
+    //Implementation of the google strategy
     function googleStrategy(token, refreshToken, profile, done) {
         userModel
             .findUserByGoogleId(profile.id)
@@ -91,6 +95,8 @@ module.exports = function (app, models) {
                 }
             );
     }
+
+    //Implementation of the local strategy
     function projectlocalStrategy(username, password, done) {
         userModel
             .findUserByUsername(username)
@@ -109,6 +115,7 @@ module.exports = function (app, models) {
             );
     }
 
+    //Remove like from current score for the user
     function unlikeSheet(req,res) {
         var noteId = req.params.noteId;
         var userId = req.params.userId;
@@ -121,6 +128,8 @@ module.exports = function (app, models) {
                 res.statusCode(400).send(error);
             });
     }
+
+    //Get all users- just for admin
     function getAllUsers(req, res) {
         userModel
             .getAllUsers()
@@ -128,7 +137,8 @@ module.exports = function (app, models) {
                 res.json(users);
             });
     }
-    
+
+    //get followed composers for the current user
     function viewFollowed(req, res) {
         var userId = req.params.userId;
         userModel
@@ -139,6 +149,8 @@ module.exports = function (app, models) {
                 res.send(404).send(error);
             });
     }
+
+    //Get scores liked by the current user
     function renderLiked(req,res) {
         var userId = req.params.userId;
         userModel
@@ -149,16 +161,13 @@ module.exports = function (app, models) {
                 res.send(404).send(error);
             });
     }
-    function getOwnScores(req, res) {
-        var userId = req.params.userId;
-        userModel
-            .findOwnScores(userId)
-            .then(function (user) {
-                res.json(user);
-            }, function (error) {
-                res.send(404).send(error);
-            });
+
+    //Serialize the current user in cookie
+    function serializeUser(user, done) {
+        done(null, user);
     }
+
+    //Deserialize the current user in cookie
     function deserializeUser(user, done) {
         userModel
             .findUserById(user._id)
@@ -172,10 +181,20 @@ module.exports = function (app, models) {
             );
     }
 
-    function serializeUser(user, done) {
-        done(null, user);
+    //Get scored created by current user
+    function getOwnScores(req, res) {
+        var userId = req.params.userId;
+        userModel
+            .findOwnScores(userId)
+            .then(function (user) {
+                res.json(user);
+            }, function (error) {
+                res.send(404).send(error);
+            });
     }
-    
+
+
+    //Register a new user
     function register(req,res) {
         var username = req.body.username;
         var password = req.body.password;
@@ -210,6 +229,8 @@ module.exports = function (app, models) {
                 res.send(400).send(err);
             })
     }
+
+    //Check if user is still logged-in
     function loggedIn(req, res) {
         if(req.isAuthenticated()){
             res.json(req.user);
@@ -217,14 +238,20 @@ module.exports = function (app, models) {
             res.send('0');
         }
     }
+
+    //Log the current user out
     function logout(req, res) {
         req.logout();
         res.send(200);
     }
+
+    //Obsolete
     function login(req, res) {
         var user = req.user;
         res.json(user);
     }
+
+    //Remove the current user from database, just for admin
     function deleteUser(req, res) {
         var id = req.params.userId;
 
@@ -240,7 +267,8 @@ module.exports = function (app, models) {
                 }
             );
     }
-    
+
+    //Check the followed flag for the composer by current user
     function checkFollow(req,res) {
         var composer = req.params.composer;
         var userId = req.params.userId;
@@ -252,7 +280,8 @@ module.exports = function (app, models) {
                     console.log(response);
                 });
     }
-    
+
+    //Increase follow flag for the composer by current user
     function followUser(req,res) {
         var user = req.user;
         var userId = user._id;
@@ -269,6 +298,8 @@ module.exports = function (app, models) {
                 }
             );
     }
+
+    //Decrease follow flag for the composer by current user
     function unfollowUser(req, res) {
         var unfollowId = req.params.unfollowId;
         var userId = req.params.userId;
@@ -281,6 +312,8 @@ module.exports = function (app, models) {
                 res.statusCode(404).send(error);
             });
     }
+
+    //Update current user details
     function updateUser(req, res) {
         var id = req.params.userId;
         var newUser = req.body;
@@ -297,6 +330,8 @@ module.exports = function (app, models) {
                 }
             );
     }
+
+    //Create new user
     function createUser(req, res) {
         var user = req.body;
 
@@ -312,6 +347,7 @@ module.exports = function (app, models) {
             )
     }
 
+    //Find user details by ID, internal use
     function findUserById(req, res) {
         var id = req.params.userId;
         userModel
@@ -324,6 +360,7 @@ module.exports = function (app, models) {
                 });
     }
 
+    //Get all users, just for admin
     function getUsers(req, res){
         var username = req.query.username;
         var password = req.query.password;
@@ -334,8 +371,7 @@ module.exports = function (app, models) {
         }
     }
 
-
-
+    //Get user by username 
     function findUserByUsername(res, username) {
         for (var i in users){
             if(users[i].username === username){

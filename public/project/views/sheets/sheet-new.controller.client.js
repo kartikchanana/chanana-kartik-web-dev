@@ -6,7 +6,6 @@
     function NewSheetController($location,$routeParams, NoteService, UserService, $rootScope) {
         var vm = this;
         vm.logout = logout;
-        vm.checkDetails = checkDetails;
 
         function init() {
             if($rootScope.currentUser == null){

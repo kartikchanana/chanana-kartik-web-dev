@@ -3,59 +3,29 @@
         .module("NoteScorer")
         .factory("UserService", UserService);
 
-
-    var cons_key = "gtQLEX3eqNiG7HBrhf3ZTfwZVqJVrfjy";
-    var cons_secret = "5kXvjuHfEUAv9EUVbMdpYcvdQtwZA79E";
-    var base = "http://api.musescore.com/services/rest";
-    
+    //Implement user service functions
     function UserService($http) {
         var api = {
-            createUser: createUser,
             login: login,
+            createUser: createUser,
             findUserByCredentials: findUserByCredentials,
             findUserByUsername: findUserByUsername,
             findUserById: findUserById,
-            updateUser: updateUser,
-            deleteUser: deleteUser,
-            logout: logout,
-            loggedIn: loggedIn,
-            register: register,
             findOwnScores: findOwnScores,
             findLiked: findLiked,
             viewFollowed: viewFollowed,
             getAllUsers: getAllUsers,
-            unlikeSheetUser: unlikeSheetUser
+            updateUser: updateUser,
+            register: register,
+            unlikeSheetUser: unlikeSheetUser,
+            deleteUser: deleteUser,
+            logout: logout,
+            loggedIn: loggedIn
+
         };
         return api;
 
-        function unlikeSheetUser(noteId, userId) {
-            return $http.put("/api/unlikeit/" +noteId + "/" + userId);
-        }
-        function getAllUsers() {
-            return $http.get("/api/allUsers");
-        }
-        function viewFollowed(userId) {
-            return $http.get("/api/viewFollowed/" + userId);
-        }
-        function findLiked(userId) {
-            return $http.get("/api/renderLiked/" +userId);
-        }
-        function findOwnScores(userId) {
-            return $http.get("/api/ownScores/" +userId);
-        }
-        function register(username, password) {
-            var userNew = {
-                username: username,
-                password: password
-            };
-            return $http.post("/api/register", userNew);
-        }
-        function loggedIn() {
-            return $http.get("/api/loggedIn");
-        }
-        function logout() {
-            return $http.post("/api/logout");
-        }
+        //Send login http call
         function login(username, password) {
             var userNew = {
                 username: username,
@@ -63,44 +33,83 @@
             };
             return $http.post("/api/login", userNew);
         }
-        function createUser(username, password) {
-            var userNew = {
-//                    _id: (new Date()).getTime()+"",
-                    username: username,
-                    password: password
-                };
-                return $http.post("/api/user", userNew);
-        }
-        
-        function deleteUser(userId) {
-            var url="/api/user/"+ userId;
-            return $http.delete(url);
-        }
-        
-        function updateUser(id, newUser) {
-            var url= "/api/user/" + id;
-            return $http.put(url, newUser);
-        }
 
-        function findUserById(id) {
-            if(id.length<12){
-                var url = "http://api.musescore.com/services/rest/user/" + id +".jsonp&oauth_consumer_key=" + cons_key + "&?callback=JSON_CALLBACK";
-                // http://api.musescore.com/services/rest/score/583.xml?oauth_consumer_key=your_consumer_key
-                return $http.jsonp(url);
-            }else{
-                var url="/api/user/"+id;
-                return $http.get(url);
-            }
-        }
-
+        //Find username- just for internal use
         function findUserByUsername(username) {
             var url = "/api/user/" +username;
             return $http.get(url);
         }
 
+        //Verify user credentials
         function findUserByCredentials(username, password) {
             var url = "/api/user?username="+username+"&password="+password;
             return $http.get(url);
         }
+        
+        //Find all local users
+        function getAllUsers() {
+            return $http.get("/api/allUsers");
+        }
+
+        //Find followed users for current user
+        function viewFollowed(userId) {
+            return $http.get("/api/viewFollowed/" + userId);
+        }
+
+        //FInd liked score for current users
+        function findLiked(userId) {
+            return $http.get("/api/renderLiked/" +userId);
+        }
+
+        //Get list of scores created by current user
+        function findOwnScores(userId) {
+            return $http.get("/api/ownScores/" +userId);
+        }
+
+        //Uncheck the liked flag
+        function unlikeSheetUser(noteId, userId) {
+            return $http.put("/api/unlikeit/" +noteId + "/" + userId);
+        }
+        
+        //Register a new user
+        function register(username, password) {
+            var userNew = {
+                username: username,
+                password: password
+            };
+            return $http.post("/api/register", userNew);
+        }
+
+        //Check if current user is still logged in
+        function loggedIn() {
+            return $http.get("/api/loggedIn");
+        }
+
+        //Log the user out
+        function logout() {
+            return $http.post("/api/logout");
+        }
+
+        //Obsolete
+        function createUser(username, password) {
+            var userNew = {
+                    username: username,
+                    password: password
+                };
+                return $http.post("/api/user", userNew);
+        }
+
+        //Update current user with the details in newUser
+        function updateUser(id, newUser) {
+            var url= "/api/user/" + id;
+            return $http.put(url, newUser);
+        }
+        
+        //Delete the entry for current user
+        function deleteUser(userId) {
+            var url="/api/user/"+ userId;
+            return $http.delete(url);
+        }
+
     }
 })();

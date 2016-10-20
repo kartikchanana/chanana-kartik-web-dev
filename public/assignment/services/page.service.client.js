@@ -2,12 +2,11 @@
     angular
         .module("WebAppMaker")
         .factory("PageService", PageService);
-
     
-    
-
+    // Implement the service
     function PageService($http) {
         var api = {
+            // CRUD operations
             createPage: createPage,
             findPageByWebsiteId: findPageByWebsiteId,
             findPageById: findPageById,
@@ -16,11 +15,7 @@
         };
         return api;
 
-        function updatePage(pageId, newPage) {
-            var url = "/api/page/" +pageId;
-            return $http.put(url, newPage);
-        }
-
+        //Create a new page
         function createPage(websiteId, name, title) {
             var newPage = {
                 name: name,
@@ -30,12 +25,6 @@
             return $http.post("/api/website/" +websiteId+ "/page", newPage);
         }
 
-
-        function deletePage(pageId) {
-            var url = "/api/page/" +pageId;
-            return $http.delete(url);
-        }
-        
         function findPageByWebsiteId(websiteId){
             var url = "/api/website/" +websiteId+"/page";
             return $http.get(url);
@@ -45,6 +34,18 @@
             var url = "/api/page/" +pageId;
             return $http.get(url);
         }
+        
+        function updatePage(pageId, newPage) {
+            var url = "/api/page/" +pageId;
+            return $http.put(url, newPage);
+        }
+        
+        function deletePage(pageId) {
+            var url = "/api/page/" +pageId;
+            return $http.delete(url);
+        }
+        
+        
         
         
     }

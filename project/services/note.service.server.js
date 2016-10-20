@@ -1,10 +1,14 @@
 module.exports = function (app, models) {
 
+    //To handle multi-part data coming from the upload form
     var multer = require('multer');
+    //Local storage destination for uploads
     var upload = multer({ dest: __dirname+'/../../public/uploads' });
+
     var noteModel = models.noteModel;
     var userModel = models.userModel;
 
+    //Incoming requests to notes server
     app.get("/api/allScores", getAllScores);
     app.put("/api/unlike/:noteId/:userId", unlikeSheet);
     app.put("/api/comment/:noteId/:comment/:username", Comment);
@@ -19,6 +23,7 @@ module.exports = function (app, models) {
     app.delete("/api/score/:scoreId" , deleteScore);
     app.get("/api/ownUserScore/:username/:userId", getOwnScores);
 
+    //Find all scores for current user
     function getOwnScores(req,res) {
         var userId = req.params.userId;
         var username = req.params.username;
@@ -28,6 +33,8 @@ module.exports = function (app, models) {
                 res.send(response);
             });
     }
+
+    //Delete a particular score
     function deleteScore(req,res) {
         var scoreId = req.params.scoreId;
         noteModel
@@ -37,6 +44,8 @@ module.exports = function (app, models) {
                 res.send(200);
             });
     }
+
+    //Update local score
     function updateScore(req, res) {
         var scoreId = req.params.scoreId;
         var score = req.body;
@@ -47,6 +56,8 @@ module.exports = function (app, models) {
                 res.send(200);
             });
     }
+
+    //Find all scores created locally
     function getAllScores(req, res) {
         noteModel
             .getAllScores()
@@ -54,7 +65,8 @@ module.exports = function (app, models) {
                 res.json(scores);
             });
     }
-    
+
+    //Find particular score for current user
     function findUserScore(req,res) {
         var scoreId = req.params.scoreId;
         if(scoreId.length <10){
@@ -72,7 +84,8 @@ module.exports = function (app, models) {
         }
         
     }
-    
+
+    //Get liked flag value for current note
     function checkLike(req, res) {
         var noteId = req.params.noteId;
         var userId = req.params.userId;
@@ -90,9 +103,12 @@ module.exports = function (app, models) {
                 });
         }
     }
+
+    //Unlike the noteID for the current user
     function unlikeSheet(req,res) {
         var noteId = req.params.noteId;
         var userId = req.params.userId;
+        //Check if it's local or from API
         if(noteId.length<10){
             noteModel
                 .unlikeApiSheet(noteId, userId)
@@ -110,8 +126,9 @@ module.exports = function (app, models) {
                     res.statusCode(404).send(error);
                 });
         }
-        
     }
+
+    //Increase the liked flag for current user
     function likeSheet(req,res) {
         var noteId = req.params.noteId;
         var user = req.user;
@@ -155,6 +172,7 @@ module.exports = function (app, models) {
         }
     }
 
+    //Get current user's score details
     function findOwnNote(req, res) {
         var scoreId = req.params.scoreId;
         noteModel
@@ -163,6 +181,8 @@ module.exports = function (app, models) {
                 res.json(score);
             });
     }
+
+    //Get comments on the current score
     function loadComments(req,res) {
         var scoreId = req.params.scoreId;
         if(scoreId.length < 10){
@@ -184,7 +204,8 @@ module.exports = function (app, models) {
         }
 
     }
-    
+
+    //Add comment to the note for current user
     function Comment(req,res) {
         var comment = req.params.comment;
         var noteId = req.params.noteId;
@@ -231,6 +252,7 @@ module.exports = function (app, models) {
         }
     }
 
+    //Search for user's scores by keyword
     function findOwnNotes(req, res) {
         var searchText = req.params.searchText;
         noteModel
@@ -240,6 +262,7 @@ module.exports = function (app, models) {
             });
     }
 
+    //Upload the created score image and details
     function uploadImage(req, res) {
         // title description license duration keysig pages secret parts url
         var scoreId;
@@ -290,6 +313,7 @@ module.exports = function (app, models) {
                 }
             };
             
+            //Create new score with the object
             noteModel
                 .createScore(Score)
                 .then(function (score) {
@@ -310,7 +334,7 @@ module.exports = function (app, models) {
                 });
         }
 
-        
+        //Go to home page after creating note
         res.redirect("/project/#/");
     }
 
