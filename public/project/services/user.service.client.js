@@ -10,7 +10,7 @@
             createUser: createUser,
             findUserByCredentials: findUserByCredentials,
             findUserByUsername: findUserByUsername,
-            findUserById: findUserById,
+            //findUserById: findUserById,
             findOwnScores: findOwnScores,
             findLiked: findLiked,
             viewFollowed: viewFollowed,
