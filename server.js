@@ -36,12 +36,12 @@ var mongoose = require("mongoose");
 var db= mongoose.connect(connectionString);
 
 //Environment variables for local and remote server
-var ipaddress = process.env.OPENSHIFT_NODEJS_IP;
-var port      = process.env.OPENSHIFT_NODEJS_PORT || 8000;
+// var ipaddress = process.env.OPENSHIFT_NODEJS_IP;
+var port      = process.env.PORT || 8000;
 
 // var assignment = require("./assignment/app.js");
 // assignment(app, mongoose, db);
 
 require("./project/app.js")(app,mongoose);
 
-app.listen(port, ipaddress);
+app.listen(port);
