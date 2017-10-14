@@ -24,12 +24,11 @@ app.use(express.static(__dirname + '/public'));
 // Connect to MongoDB
 var connectionString = 'mongodb://127.0.0.1:27017/projectdata';
 
-if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
-    connectionString = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
-        process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
-        process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
-        process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
-        process.env.OPENSHIFT_APP_NAME;
+if(process.env.MLAB_USERNAME_WEBDEV) {
+    var username = process.env.MLAB_USERNAME_WEBDEV; // get from environment
+    var password = process.env.MLAB_PASSWORD_WEBDEV;
+    connectionString = 'mongodb://' + username + ':' + password;
+    connectionString += '@ds121015.mlab.com:21015/heroku_zbs5978h';
 }
 
 var mongoose = require("mongoose");
