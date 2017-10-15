@@ -22,8 +22,7 @@ app.use(passport.session());
 app.use(express.static(__dirname + '/public'));
 
 // Connect to MongoDB
-// var connectionString = 'mongodb://127.0.0.1:27017/projectdata';
-var connectionString = '';
+var connectionString = 'mongodb://127.0.0.1:27017/projectdata';
 
 if(process.env.MLAB_USERNAME_WEBDEV) {
     var username = process.env.MLAB_USERNAME_WEBDEV; // get from environment

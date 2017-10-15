@@ -5,6 +5,7 @@ module.exports = function (app, models) {
     //Local storage destination for uploads
     var upload = multer({ dest: __dirname+'/../../public/uploads' });
 
+    var request = require('request');
     var noteModel = models.noteModel;
     var userModel = models.userModel;
 
